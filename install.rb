@@ -7,7 +7,11 @@ home = File.expand_path('~')
 Dir['*'].each do |file|
   next if file =~ /install/
   target = File.join(home, ".#{file}")
-  `ln -s #{File.expand_path file} #{target}`
+  if File.exists? target
+    puts "#{target} exits, skipping."
+  else  
+    `ln -s #{File.expand_path file} #{target}`
+  end
 end
 
 # git push on commit

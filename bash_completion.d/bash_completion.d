@@ -1,1 +1,0 @@
-/Users/lhn/Code/dotfiles/bash_completion.d
