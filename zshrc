@@ -43,7 +43,7 @@ bindkey -M vicmd "^M" accept_line
 #zle -N zle-keymap-select
 
 # Prompt
-[[ -b ~/.zsh/git-prompt/zshrc.sh ]] && source ~/.zsh/git-prompt/zshrc.sh
+[[ -e ~/.zsh/git-prompt/zshrc.sh ]] && source ~/.zsh/git-prompt/zshrc.sh
 # configure the following, or leave it commented out:
 # PROMPT='%B%m%~%b$(prompt_git_info) %# 
 RPROMPT='${VIMODE}'
@@ -69,4 +69,4 @@ setopt hist_no_store # Don't save invocation of history itself
 setopt hist_no_functions # Don't save ZSH function definitions
 
 alias clojure='java -cp $JLINE_HOME/jline.jar:$CLOJURE_HOME/clojure.jar jline.ConsoleRunner clojure.main'
-[[ -b ~/.zshlocal ]] && source ~/.zshlocal
+[[ -e ~/.zshlocal ]] && source ~/.zshlocal
