@@ -9,6 +9,13 @@ export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
 # vi mode
 bindkey -v
 
+# Allow prompt colors
+autoload -U colors
+colors
+
+# Allow function executions in the prompt
+setopt PROMPT_SUBST
+
 # Show vi-mode in prompt:
 # http://pthree.org/2009/03/28/add-vim-editing-mode-to-your-zsh-prompt/
 
@@ -43,9 +50,10 @@ bindkey -M vicmd "^M" accept_line
 #zle -N zle-keymap-select
 
 # Prompt
+# default. See https://wiki.archlinux.org/index.php/Zsh
+PROMPT='%B%m%~%b %# '
+# fancy git prompt
 [[ -e ~/.zsh/git-prompt/zshrc.sh ]] && source ~/.zsh/git-prompt/zshrc.sh
-# configure the following, or leave it commented out:
-# PROMPT='%B%m%~%b$(prompt_git_info) %# 
 RPROMPT='${VIMODE}'
 
 # History 
