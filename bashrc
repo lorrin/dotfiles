@@ -40,7 +40,11 @@ shopt -s cmdhist
 #PS1='\[\e[0;31m\][\u@\h \[\e[1;31m\]\w\e[0;31m\] \t]\n\[\e[1;31m\]\$\[\e[0m\] '
 #PS1='\[\e[0;31m\][\u@\h \[\e[1;31m\]\w\e[0;31m\]]\[\e[1;31m\]\$\[\e[0m\] '
 #export PS1='\h:\w\[\033[32m\]$(__git_ps1) \[\033[0m\]$ '
-[[ $- == *i* ]]   &&   . ~/Code/git-prompt/git-prompt.sh
+[[ $- == *i* ]]   && [ -e ~/Code/git-prompt/git-prompt.sh ] &&  . ~/Code/git-prompt/git-prompt.sh
 
 # Can I show the insert/edit vi state in the prompt? No.
 # http://stackoverflow.com/questions/1039713/different-bash-prompt-for-different-vi-editing-mode
+
+# Enable colors
+export CLICOLOR=true
+
