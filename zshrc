@@ -1,83 +1,45 @@
-# This file is for configuring Bash itself. 
-# See http://stefaanlippens.net/bashrc_and_others
+# Path to your oh-my-zsh configuration.
+export ZSH=$HOME/.oh-my-zsh
 
-#JRuby FFI doesn't like the - Mac OS ncurses for some reason.)
-export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
+# Set to the name theme to load.
+# Look in ~/.oh-my-zsh/themes/
+export ZSH_THEME="flazz"
+# dieter theme has nice config of how hosts are represented. Stick with 
+# flazz for now for vi-mode indication
+#host_repr=('kale-wired' "%($fg_bold[green]kale")
 
-#Colorful dir listings
-export CLICOLOR=true
+# Set to this to use case-sensitive completion
+# export CASE_SENSITIVE="true"
 
-# Custom completions
+# Comment this out to disable weekly auto-update checks
+# export DISABLE_AUTO_UPDATE="true"
 
-# vi mode
-bindkey -v
+# Uncomment following line if you want to disable colors in ls
+# export DISABLE_LS_COLORS="true"
 
-# Allow prompt colors
-autoload -U colors
-colors
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git vi-mode)
+# others to try:
+# command-not-found -- needs fixing to work when not on Ubuntu
+# dirpersist looks interesting
 
-# Allow function executions in the prompt
-setopt PROMPT_SUBST
+source $ZSH/oh-my-zsh.sh
 
-# Show vi-mode in prompt:
-# http://pthree.org/2009/03/28/add-vim-editing-mode-to-your-zsh-prompt/
+# Customize to your needs...
 
-# If I am using vi keys, I want to know what mode I'm currently using.
-# zle-keymap-select is executed every time KEYMAP changes.
-# From http://zshwiki.org/home/examples/zlewidgets
-function zle-keymap-select {
-    VIMODE="${${KEYMAP/vicmd/ M:command}/(main|viins)/}"
-    #VIMODE="${${KEYMAP/(main|viins)/ -- INSERT --}/vicmd/}"
-    zle reset-prompt
-}
-
-zle -N zle-keymap-select
-
-# Reset vimode variable when <enter> is pressed.
-# http://pthree.org/2009/03/28/add-vim-editing-mode-to-your-zsh-prompt/
-function accept_line {
-    VIMODE=''
-    builtin zle .accept-line
-}
-zle -N accept_line
-bindkey -M vicmd "^M" accept_line
-
-# Alternate show-vi-mode-solution
-#function zle-line-init zle-keymap-select {
-#    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-#    RPS2=$RPS1
-#    zle reset-prompt
-#}
-#
-#zle -N zle-line-init
-#zle -N zle-keymap-select
-
-# Prompt
-# default. See https://wiki.archlinux.org/index.php/Zsh
-PROMPT='%B%m%~%b %# '
-# fancy git prompt
-[[ -e ~/.zsh/git-prompt/zshrc.sh ]] && source ~/.zsh/git-prompt/zshrc.sh
-RPROMPT='${VIMODE}'
-
-# History 
-HISTSIZE=1000
-SAVEHIST=1000
-HISTFILE=~/.zsh/history
-# Ctrl-r for reverse history search
-# Apply both in vi-insert mode (v) and vi-command mode (a for alternate binding set)
-for keymap in v a; do
-   bindkey -$keymap "^r"  history-incremental-search-backward
-done
+# Some history settings missing from lib/history.zsh
 setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
-#setopt share_history # Share history real-time between instances.
-setopt extended_history # Store metadata about each entry
-setopt hist_ignore_dups # Don't store sequential duplicate lines
-setopt hist_expire_dups_first # Drop duplicate from history first when limit is hit
-setopt hist_find_no_dups # Don't cycle through dupes during history search
-setopt hist_reduce_blanks # Trim before saving
-setopt hist_ignore_space # Don't save if prefixed by space
-setopt hist_no_store # Don't save invocation of history itself
-setopt hist_no_functions # Don't save ZSH function definitions
+#setopt share_history # Share history real-time between instances.              
+setopt hist_ignore_dups # Don't store sequential duplicate lines                
+setopt hist_find_no_dups # Don't cycle through dupes during history search      
+setopt hist_reduce_blanks # Trim before saving                                  
+setopt hist_no_store # Don't save invocation of history itself                  
+setopt hist_no_functions # Don't save ZSH function definitions   
+setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
+
+#JRuby FFI doesn't like the - Mac OS ncurses for some reason.)                  
+export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
 
 alias clojure='java -cp $JLINE_HOME/jline.jar:$CLOJURE_HOME/clojure.jar jline.ConsoleRunner clojure.main'
 [[ -e ~/.zshlocal ]] && source ~/.zshlocal
