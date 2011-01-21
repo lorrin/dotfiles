@@ -4,6 +4,9 @@
 #JRuby FFI doesn't like the - Mac OS ncurses for some reason.)
 export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
 
+#Colorful dir listings
+export CLICOLOR=true
+
 # Custom completions
 
 # vi mode

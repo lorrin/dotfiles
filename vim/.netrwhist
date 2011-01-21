@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/Users/lhn/Code/EMI/git/emi-master/drive/service/core/src/main/overrides'
-let g:netrw_dirhist_2='/Users/lhn/Code/EMI/git/emi-master/salesforce-integration/opps/src/main/resources/config'
-let g:netrw_dirhist_3='/Users/lhn/Code/hello-www'
