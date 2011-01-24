@@ -28,6 +28,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# oh-my-zsh vi-mode plug-in doesn't bind anything for incremental backward history search
+bindkey -M vicmd '?' history-incremental-search-backward
+
 # Some history settings missing from lib/history.zsh
 setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
 #setopt share_history # Share history real-time between instances.              
