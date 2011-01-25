@@ -2,5 +2,6 @@ set editing-mode vi
 set keymap vi
 
 $if mode=vi
-"?":reverse-search-history
+    "?":non-incremental-forward-search-history
+    "/":non-incremental-reverse-search-history 
 $endif
