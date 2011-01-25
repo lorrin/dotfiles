@@ -32,8 +32,9 @@ source $ZSH/oh-my-zsh.sh
 bindkey -M vicmd '?' history-incremental-search-backward
 
 # Some history settings missing from lib/history.zsh
+unsetopt share_history # Don't share history real-time between instances.              
 setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
-#setopt share_history # Share history real-time between instances.              
+
 setopt hist_ignore_dups # Don't store sequential duplicate lines                
 setopt hist_find_no_dups # Don't cycle through dupes during history search      
 setopt hist_reduce_blanks # Trim before saving                                  
