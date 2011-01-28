@@ -2,8 +2,8 @@
 set nocompatible "set nocompatible gets rid of all the crap that Vim does to be vi compatible.
 set autoindent
 set smartindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set showmatch
 set guioptions-=T
 set vb t_vb=
