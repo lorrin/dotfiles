@@ -17,6 +17,9 @@ export ZSH_THEME="flazz"
 # Uncomment following line if you want to disable colors in ls
 # export DISABLE_LS_COLORS="true"
 
+# Uncomment following line if you want to disable autosetting terminal title.   
+export DISABLE_AUTO_TITLE="true" 
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git vi-mode)
@@ -28,22 +31,23 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-# oh-my-zsh vi-mode plug-in doesn't bind anything for incremental backward history search
-bindkey -M vicmd '?' history-incremental-search-backward
+# Add some emacs-mode bindings I've gotten used to
+for mode in vicmd viins; do 
+    bindkey -M $mode "^A" beginning-of-line
+    bindkey -M $mode "^E" end-of-line
+    bindkey -M $mode "^R" history-incremental-search-backward
+done;
 
-# Some history settings missing from lib/history.zsh
+# Prefer inc_append_history of share_history for consistent per-window behavior
 unsetopt share_history # Don't share history real-time between instances.              
 setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
 
+# Some history settings missing from lib/history.zsh
 setopt hist_ignore_dups # Don't store sequential duplicate lines                
 setopt hist_find_no_dups # Don't cycle through dupes during history search      
 setopt hist_reduce_blanks # Trim before saving                                  
 setopt hist_no_store # Don't save invocation of history itself                  
 setopt hist_no_functions # Don't save ZSH function definitions   
-setopt inc_append_history # Each instance has its own history at run time, but global history file (for future invocations) is appended in real-time
 
-#JRuby FFI doesn't like the - Mac OS ncurses for some reason.)                  
-export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
-
-alias clojure='java -cp $JLINE_HOME/jline.jar:$CLOJURE_HOME/clojure.jar jline.ConsoleRunner clojure.main'
+# Load machine-local config
 [[ -e ~/.zshlocal ]] && source ~/.zshlocal
