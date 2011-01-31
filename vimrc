@@ -45,3 +45,11 @@ set gdefault "gdefault applies substitutions globally on lines. For example, ins
 "vnoremap / /\v
 
 set colorcolumn=80
+
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+" Unicode Character 'BLACK RIGHT-POINTING SMALL TRIANGLE' (U+25B8) ▸
+" Unicode Character 'NOT SIGN' (U+00AC) ¬
+" Unicode Character 'HYPHENATION POINT' (U+2027) ‧
+" Unicode Character 'PILCROW SIGN' (U+00B6) ¶
+set list
+set listchars=tab:▸\ ,trail:‧
