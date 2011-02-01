@@ -36,6 +36,17 @@ set expandtab
 " From http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 set modelines=0 "prevents some security exploits having to do with modelines in files
 set undofile "persistent undo data for files
+set scrolloff=3 "scroll window to keep cursor n lines from edge
+set showmode "indicate when in insert mode (default anyway?)
+set showcmd "show command being built
+set wildmenu "display menu of possible completions
+set wildmode=list:longest "display menu of possible completions
+set visualbell
+set backspace=indent,eol,start "allow deletion of anything with backspace
+set laststatus=2
+set relativenumber "line number column shows relative distance
+
+
 
 "search for an all-lowercase string will be case-insensitive, but if one or more characters is uppercase the search will be case-sensitive
 set ignorecase
