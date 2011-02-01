@@ -1,3 +1,9 @@
+" Pathogen (http://www.vim.org/scripts/script.php?script_id=2332)
+" allows placing extensions in vim/bundle/<private dir>
+filetype off
+call pathogen#runtime_append_all_bundles()
+filetype plugin indent on
+
 "From http://jmcpherson.org/vimrc.html
 set nocompatible "set nocompatible gets rid of all the crap that Vim does to be vi compatible.
 set autoindent
@@ -17,9 +23,6 @@ set autowrite "save buffers automatically when switching buffers or running exte
 " From http://www.moolenaar.net/habits.html
 set hlsearch
 syntax on
-
-" Required for Clojure syntax plug-in. Not sure what it does
-filetype plugin indent on
 
 " Pig syntax from http://www.vim.org/scripts/script.php?script_id=2186
 augroup filetypedetect
