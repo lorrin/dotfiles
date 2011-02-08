@@ -22,7 +22,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode)
+plugins=(git vi-mode command-not-found)
 # others to try:
 # command-not-found -- needs fixing to work when not on Ubuntu
 # dirpersist looks interesting
@@ -49,5 +49,6 @@ setopt hist_reduce_blanks # Trim before saving
 setopt hist_no_store # Don't save invocation of history itself                  
 setopt hist_no_functions # Don't save ZSH function definitions   
 
+unsetopt correct_all # Turn off the after-the-fact spelling correction prompts
 # Load machine-local config
 [[ -e ~/.zshlocal ]] && source ~/.zshlocal
