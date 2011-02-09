@@ -35,7 +35,7 @@ set expandtab
 
 " From http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 set modelines=0 "prevents some security exploits having to do with modelines in files
-if version >= 730
+if version >= 703
   set undofile "persistent undo data for files
 endif
 set scrolloff=3 "scroll window to keep cursor n lines from edge
@@ -46,7 +46,7 @@ set wildmode=list:longest "display menu of possible completions
 set visualbell
 set backspace=indent,eol,start "allow deletion of anything with backspace
 set laststatus=2
-if version >= 730
+if version >= 703
   set relativenumber "line number column shows relative distance
 else
   set number "regular line numbers
@@ -64,9 +64,9 @@ set gdefault "gdefault applies substitutions globally on lines. For example, ins
 "nnoremap / /\v
 "vnoremap / /\v
 
-if version >= 730
-  set colorcolumn=80
-endif
+"if version >= 703
+"  set colorcolumn=80
+"endif
 
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
 " Unicode Character 'BLACK RIGHT-POINTING SMALL TRIANGLE' (U+25B8) ▸
