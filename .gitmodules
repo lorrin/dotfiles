@@ -16,3 +16,6 @@
 [submodule "vim/bundle/scala"]
 	path = vim/bundle/scala
 	url = https://github.com/superjudge/vim-scala.git
+[submodule "vim/bundle/yankring"]
+	path = vim/bundle/yankring
+	url = https://github.com/chrismetcalf/vim-yankring.git
