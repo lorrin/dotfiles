@@ -52,7 +52,8 @@ else
   set number "regular line numbers
 endif
 
-
+let mapleader = "," "use semi-standard , instead of \ as leader key.
+nmap <Leader>n :NERDTree<CR>
 
 "search for an all-lowercase string will be case-insensitive, but if one or more characters is uppercase the search will be case-sensitive
 set ignorecase
