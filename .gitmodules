@@ -19,3 +19,6 @@
 [submodule "vim/bundle/yankring"]
 	path = vim/bundle/yankring
 	url = https://github.com/chrismetcalf/vim-yankring.git
+[submodule "vim/bundle/vimclojure"]
+	path = vim/bundle/vimclojure
+	url = https://github.com/jondistad/vimclojure.git
