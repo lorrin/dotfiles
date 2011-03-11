@@ -13,3 +13,6 @@
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://git.wincent.com/command-t.git
+[submodule "vim/bundle/scala"]
+	path = vim/bundle/scala
+	url = https://github.com/superjudge/vim-scala.git
