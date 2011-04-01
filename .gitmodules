@@ -22,3 +22,6 @@
 [submodule "vim/bundle/vimclojure"]
 	path = vim/bundle/vimclojure
 	url = https://github.com/jondistad/vimclojure.git
+[submodule "vim/bundle/vim-colors-solarized"]
+	path = vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git

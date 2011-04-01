@@ -76,3 +76,10 @@ set gdefault "gdefault applies substitutions globally on lines. For example, ins
 " Unicode Character 'PILCROW SIGN' (U+00B6) ¶
 set list
 set listchars=tab:▸\ ,trail:‧
+
+if has('gui_running')
+  set background=light
+  colorscheme solarized
+"else
+"  let g:solarized_termcolors=16
+endif
