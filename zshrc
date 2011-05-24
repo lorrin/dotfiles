@@ -53,4 +53,4 @@ setopt hist_no_functions # Don't save ZSH function definitions
 
 unsetopt correct_all # Turn off the after-the-fact spelling correction prompts
 # Load machine-local config
-[[ -e ~/.zshlocal ]] && source ~/.zshlocal
+[[ -e ~/.zshrc.local ]] && source ~/.zshrc.local
