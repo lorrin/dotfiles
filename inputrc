@@ -1,7 +1,8 @@
 set editing-mode vi
 set keymap vi
 
-$if mode=vi
-    "?":non-incremental-forward-search-history
-    "/":non-incremental-reverse-search-history 
-$endif
+"?":non-incremental-forward-search-history
+"/":non-incremental-reverse-search-history
+"C-a":beginning-of-line
+"C-e":end-of-line
+"C-r":reverse-search-history
