@@ -24,7 +24,7 @@ export DISABLE_AUTO_TITLE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode command-not-found dirpersist)
+plugins=(git vi-mode command-not-found)
 
 # Modify locally by putting a list (space-separated) of additional plugins in ~/.zshrc.local.plugins
 if [[ -e ~/.zshrc.local.plugins ]]; then
