@@ -1,14 +1,20 @@
 export EDITOR=vim
 
 # Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
 
-# Set to the name theme to load.
+# Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-export ZSH_THEME="flazz"
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="flazz"
 # dieter theme has nice config of how hosts are represented. Stick with 
 # flazz for now for vi-mode indication
 #host_repr=('kale-wired' "%($fg_bold[green]kale")
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
 # export CASE_SENSITIVE="true"
@@ -22,7 +28,11 @@ export ZSH_THEME="flazz"
 # Uncomment following line if you want to disable autosetting terminal title.   
 export DISABLE_AUTO_TITLE="true" 
 
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git vi-mode command-not-found)
 
