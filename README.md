@@ -8,15 +8,10 @@ Installation
         Host github.com
           IdentityFile ~/.ssh/keyfile_name
 </pre>
- * Global config:
-   <pre>
-git config --global user.name "First Last"
-git config --global user.email "foo@bar.org"
-</pre>
 * Change shell to zsh in `/etc/passwd`
 * Pull in vim submodules.
    <pre>
-cd ~/dotfiles/vim 
+cd ~/dotfiles
 git submodule init
 git submodule update
 </pre>
@@ -24,6 +19,11 @@ git submodule update
    <pre>
 cd ~/dotfiles
 ./install
+</pre>
+* Adjust git global config:
+   <pre>
+git config --global user.name "First Last"
+git config --global user.email "foo@bar.org"
 </pre>
 
 ### VIM Command-T support
