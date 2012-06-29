@@ -12,7 +12,11 @@ git submodule init
 git submodule update
 </pre>
 * Update submodules from upstream
-    <pre>
+   <pre>
 git submodule foreach git pull origin master‧
 git commit -a
+</pre>
+* Add new submodules
+   <pre>
+git submodule add https://github.com/myusuf3/numbers.vim.git vim/bundle/numbers
 </pre>
