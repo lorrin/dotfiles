@@ -7,10 +7,11 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="flazz"
-# dieter theme has nice config of how hosts are represented. Stick with 
-# flazz for now for vi-mode indication
-#host_repr=('kale-wired' "%($fg_bold[green]kale")
+#
+# dieter theme has nice config of how hosts are represented, but no vi-mode indication
+# host_repr=('kale-wired' "%($fg_bold[green]kale")
+# flazz has good vi-mode indication
+ZSH_THEME="lorrin"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -34,7 +35,10 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode command-not-found)
+plugins=(command-not-found git mvn vagrant vi-mode zsh-syntax-highlighting)
+
+# See https://github.com/zsh-users/zsh-syntax-highlighting/tree/master/highlighters
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # Modify locally by putting a list (space-separated) of additional plugins in ~/.zshrc.local.plugins
 if [[ -e ~/.zshrc.local.plugins ]]; then
