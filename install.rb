@@ -4,12 +4,12 @@
 
 home = File.expand_path('~')
 
-Dir['*'].each do |file|
-  next if file =~ /install/
-  target = File.join(home, ".#{file}")
-  if File.exists? target
-    puts "#{target} exits, skipping."
+Dir['symlink/*'].each do |file|
+  target = File.join(home, ".#{File.basename(file)}")
+  if File.exists? target or File.symlink? target
+    puts "#{target} exists, will not overwrite."
   else  
+    puts "Linking #{target} -> #{File.expand_path file}"
     `ln -s #{File.expand_path file} #{target}`
   end
 end
