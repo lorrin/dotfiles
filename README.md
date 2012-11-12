@@ -13,7 +13,7 @@ Installation
 git config --global user.name "Lorrin Nelson"
 git config --global user.email "spam@lorrin.org"
 </pre>
-* Change shell to zsh in `/etc/passwd`. On OS X System Preferences -> Users & Groups -> Right Click -> Advanced Options...
+* Change shell to zsh in `/etc/passwd`. On OS X use `sudo chsh -s /opt/local/bin/zsh <user>` (for MacPorts ZSH; can also just use `/bin/zsh`). Alternately in GUI: System Preferences -> Users & Groups -> Right Click -> Advanced Options...
 * Pull in submodules.
    <pre>
 cd ~/dotfiles
