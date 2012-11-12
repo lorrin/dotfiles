@@ -28,6 +28,8 @@ def symlink(source, target_relative_path, target_filename)
   end
 end
 
+`git submodule init`
+`git submodule update`
 
 Dir['simple/*'].each { |file| symlink(file, "", "." + File.basename(file)) }
 symlink("oh-my-zsh", "", ".oh-my-zsh")
@@ -39,6 +41,11 @@ symlink("vundle", ".vim/bundle", "vundle")
     symlink(File.join("spf13-vim", file), "", file)
 }
 
+# numbers.vim requires curl (why?)
+puts "Please install curl" if `which curl`.empty?
+unless `grep $USER /etc/passwd`.empty?
+    puts "ZSH does not appear to be your default shell" unless grep -P "$USER.*/zsh" /etc/passwd
+end
 puts "Now run: vim -u spf13-vim/.vimrc +BundleInstall! +BundleClean +qall"
 
 
