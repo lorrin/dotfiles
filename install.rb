@@ -44,7 +44,7 @@ symlink("vundle", ".vim/bundle", "vundle")
 # numbers.vim requires curl (why?)
 puts "Please install curl" if `which curl`.empty?
 unless `grep $USER /etc/passwd`.empty?
-    puts "ZSH does not appear to be your default shell" unless `grep -P "$USER.*/zsh" /etc/passwd`.empty?
+    puts "ZSH does not appear to be your default shell" if `grep -P "$USER.*/zsh" /etc/passwd`.empty?
 end
 puts "Now run: vim -u spf13-vim/.vimrc +BundleInstall! +BundleClean +qall"
 
