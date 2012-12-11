@@ -31,15 +31,20 @@ end
 `git submodule init`
 `git submodule update`
 
+# Grab everything in simple and make it a .dotfile
 Dir['simple/*'].each { |file| symlink(file, "", "." + File.basename(file)) }
-symlink("oh-my-zsh", "", ".oh-my-zsh")
-symlink("zsh-syntax-highlighting", ".oh-my-zsh/custom/plugins", "zsh-syntax-highlighting")
+
+symlink("oh-my-zsh", "", ".oh-my-zsh") # upstream submodule
+symlink("zsh-syntax-highlighting", ".oh-my-zsh/custom/plugins", "zsh-syntax-highlighting") #upstream submodule
+# Apply changes to the stock oh-my-zsh
 symlink("oh-my-zsh-custom/lorrin.zsh-theme", ".oh-my-zsh/themes", "lorrin.zsh-theme")
-symlink("spf13-vim", "", ".spf13-vim-3")
-symlink("vundle", ".vim/bundle", "vundle")
-[".vimrc", ".vimrc.fork", ".vimrc.bundles", ".vimrc.bundles.fork"].each { |file|
+symlink("spf13-vim", "", ".spf13-vim-3") # upstream submodule
+symlink("vundle", ".vim/bundle", "vundle") #upstream submodule
+# Complete the spf13-vim linking. Note .fork comes from dotfiles, not upstream module
+[".vimrc", ".vimrc.bundles"].each { |file|
     symlink(File.join("spf13-vim", file), "", file)
 }
+symlink("pig.vim/syntax/pig.vim", ".vim/syntax", "/pig.vim")
 
 # numbers.vim requires curl (why?)
 puts "Please install curl" if `which curl`.empty?
