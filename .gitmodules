@@ -10,3 +10,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "pig.vim"]
+	path = pig.vim
+	url = https://github.com/vim-scripts/pig.vim
