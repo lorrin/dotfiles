@@ -73,3 +73,6 @@ unsetopt correct_all # Turn off the after-the-fact spelling correction prompts
 
 # Load machine-local config
 [[ -e ~/.zshrc.local ]] && source ~/.zshrc.local
+
+alias ssh_unsafe="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+alias scp_unsafe="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
