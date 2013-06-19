@@ -53,3 +53,5 @@
 	default = upstream
 [branch]
 	autosetuprebase = always
+[remote "origin"]
+	push = HEAD
