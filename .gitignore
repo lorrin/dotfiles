@@ -1,1 +1,4 @@
-spf13-vim-3/.vim
+spf13-vim-3/.vim/*
+!spf13-vim-3/.vim/bundle
+spf13-vim-3/.vim/bundle/*
+!spf13-vim-3/.vim/bundle/vundle

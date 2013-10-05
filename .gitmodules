@@ -7,3 +7,6 @@
 [submodule "zprezto/.zprezto"]
 	path = zprezto/.zprezto
 	url = git@github.com:lorrin/prezto.git
+[submodule "spf13-vim-3/.vim/bundle/vundle"]
+	path = spf13-vim-3/.vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git
