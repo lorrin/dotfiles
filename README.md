@@ -30,16 +30,32 @@ Installation
     cd ~/dotfiles
     git submodule init
     git submodule update
+    cd oh-my-zsh/.oh-my-zsh/
+    git submodule init
+    git submodule update
 </pre>
 1. Use `stow` to install symlinks for desired items. Do not use oh-my-zsh and zprezto together.
   <pre>
 cd ~/dotfiles
 for item in git oh-my-zsh readline screen spf13-vim-3 vim; do stow $item; done;
 </pre>
+1. `cd ~/.vim/bundle/vundle`
+1. `git checkout master`
 1. Install vim bundles: `vim +BundleInstall! +BundleClean +q`
 
 Updates
 -------
+Once:
+<pre>
+cd ~/dotfiles/oh-my-zsh/.oh-my-zsh
+git remote add upstream git@github.com:robbyrussell/oh-my-zsh.git
+cd ~/dotfiles/spf13-vim-3/.spf13-vim-3/
+git remote add upstream git@github.com:spf13/spf13-vim.git
+cd ~/dotfiles/zprezto/.zprezto/
+git remote add upstream git@github.com:sorin-ionescu/prezto.git
+</pre>
+
+Each time:
 <pre>
 cd ~/dotfiles
 git pull
@@ -47,11 +63,21 @@ git submodule update
 
 cd ~/.oh-my-zsh
 git pull --no-rebase upstream master
+git push origin master
+
+cd ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/
+git pull --no-rebase origin master
 
 cd ~/.zprezto
 git pull --no-rebase upstream master
+git push origin master
 
 cd ~/.spf13-vim-3
 git pull --no-rebase upstream 3.0
+git push origin 3.0
+
+cd ~/.vim/bundle/vundle/
+git pull --no-rebase origin master
+
 vim +BundleInstall! +BundleClean +q
 </pre>
