@@ -1,5 +1,5 @@
 if has('gui_running') || has('macunix')
-    set background=light
+    set background=dark
 else
     set background=dark
 endif
