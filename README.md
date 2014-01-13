@@ -37,7 +37,7 @@ Installation
 1. Use `stow` to install symlinks for desired items. Do not use oh-my-zsh and zprezto together.
   <pre>
 cd ~/dotfiles
-for item in git oh-my-zsh readline screen spf13-vim-3 vim; do stow $item; done;
+for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim; do stow $item; done;
 </pre>
 1. `cd ~/.vim/bundle/vundle`
 1. `git checkout master`
