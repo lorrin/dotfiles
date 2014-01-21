@@ -4,6 +4,54 @@ else
     set background=dark
 endif
 
+" spf13-vim does this:
+"     if has ('x') && has ('gui') " On Linux use + register for copy-paste
+"         set clipboard=unnamedplus
+"     elseif has ('gui')          " On mac and Windows, use * register for copy-paste
+"         set clipboard=unnamed
+"     endif
+" But this interacts poorly with tmux / reattach-to-user-namespace setup on OS X
+" See http://robots.thoughtbot.com/tmux-copy-paste-on-os-x-a-better-future
+" See https://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
+" So on OS X, put it back to "
+if has ('x') && has ('gui') " On Linux use + register for copy-paste
+    set clipboard=unnamedplus
+elseif has ('gui')          " On mac and Windows, use * register for copy-paste
+    set clipboard=""
+endif
+" spf13-vim does this too, and we want to also enable 256 color inside tmux
+"     if has('gui_running')
+"         set guioptions-=T           " Remove the toolbar
+"         set lines=40                " 40 lines of text instead of 24
+"         if has("gui_gtk2")
+"             set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+"         elseif has("gui_mac")
+"             set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+"         elseif has("gui_win32")
+"             set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+"         endif
+"         if has('gui_macvim')
+"             set transparency=5      " Make the window slightly transparent
+"         endif
+"     else
+"         if &term == 'xterm' || &term == 'screen'
+"             set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+"         endif
+"         "set term=builtin_ansi       " Make arrow and other keys work
+"     endif
+    if has('gui_running')
+        " pass
+    else
+        if &term == 'xterm' || &term == 'screen' || &term == 'tmux'
+            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+        endif
+        "set term=builtin_ansi       " Make arrow and other keys work
+    endif
+
+
+
+
+
 augroup filetypedetect
     au BufNewFile,BufRead *.pig set filetype=pig syntax=pig
 augroup END 
