@@ -39,11 +39,12 @@ Installation
 cd ~/dotfiles
 for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim; do stow $item; done;
 </pre>
+1. If applicable, include `local_<hostname>` in the list above.
 1. `cd ~/.vim/bundle/vundle`
 1. `git checkout master`
 1. Install vim bundles: `vim +BundleInstall! +BundleClean +q`
 
-Updates
+Getting Updates
 -------
 Once:
 <pre>
@@ -81,3 +82,9 @@ git pull --no-rebase origin master
 
 vim +BundleInstall! +BundleClean +q
 </pre>
+
+Adding New Items
+-------
+1. Create new directory
+2. `stow` it
+3. Update installation steps
