@@ -1,3 +1,1 @@
 PATH=~/bin:$PATH
-export M2_HOME=/opt/apache-maven-3.0.3
-export PLAY2_HOME=/home/lorrin/opt/play

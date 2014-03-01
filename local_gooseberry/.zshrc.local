@@ -1,7 +1,4 @@
 alias bibble='/opt/bibble5/bin/bibble5'
-alias rubymine='JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.24 /opt/RubyMine-3.1.1/bin/rubymine.sh'
-alias intellij='/opt/intellij/bin/idea.sh'
-alias mvn='/opt/apache-maven-3.0.3/bin/mvn'
 alias psql='sudo -u postgres -H /usr/bin/psql'
 alias ack='ack-grep'
 alias p4v='/opt/p4v/bin/p4v'
