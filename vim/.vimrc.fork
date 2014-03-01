@@ -13,11 +13,9 @@ endif
 " But this interacts poorly with tmux / reattach-to-user-namespace setup on OS X
 " See http://robots.thoughtbot.com/tmux-copy-paste-on-os-x-a-better-future
 " See https://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
-" So on OS X, put it back to "
-if has ('x') && has ('gui') " On Linux use + register for copy-paste
-    set clipboard=unnamedplus
-elseif has ('gui')          " On mac and Windows, use * register for copy-paste
-    set clipboard=""
+" So OS X in TMUX, put it back to "
+if has('macunix') && $TMUX != ''
+    set clipboard="
 endif
 " spf13-vim does this too, and we want to also enable 256 color inside tmux
 "     if has('gui_running')
