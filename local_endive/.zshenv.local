@@ -1,0 +1,54 @@
+export LANG="de_DE.UTF-8"
+
+# Java
+# See http://stackoverflow.com/questions/6588390/where-is-java-home-on-osx-lion
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+#export CLOJURE_HOME=/Applications/clojure-1.2.0
+export JLINE_HOME=/Applications/jline-0.9.5
+#export PLAY2_HOME=/Applications/play-2.1.0
+
+# HBase 0.94 uses a ZooKeeper that is too new for Pig 0.10. Failure mode is:
+# (in HBase log) ZooKeeper signs on as:
+# INFO org.apache.hadoop.hbase.zookeeper.RecoverableZooKeeper: The identifier of this process is 42548@endive.local
+# and then when pig -x local tries to use HBaseStorage, it fails:
+# ERROR org.apache.pig.tools.grunt.Grunt - ERROR 2999: Unexpected internal error. Not a host:port pair: ?42548@endive.local10.1.10.70,64058,1341349176322
+#export HBASE_HOME=/Applications/hbase-0.94.0
+#export HBASE_HOME=/Applications/hbase-0.90.6
+#export PIG_HOME=/Applications/pig-0.11.1
+#export PIG_CLASSPATH=$PIG_HOME/pig-0.10.0.jar:$HADOOP_HOME/conf
+#export HIVE_HOME=/Applications/hive-0.8.1-bin/
+#export PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin:$PIG_HOME/bin:$HIVE_HOME/bin
+
+# Maven (note Maven 3 is still using M2_* variables)
+export M2_HOME=/Applications/apache-maven-3.0.4
+
+export PATH=$PATH:/opt/local/lib/postgresql90/bin
+
+# sudo port install lesspipe
+export LESSOPEN='| /opt/local/bin/lesspipe.sh %s'
+
+#For official AWS CLI (http://docs.aws.amazon.com/cli/latest/userguide). Omit, use default ~/.aws/config
+#export AWS_CONFIG_FILE=${HOME}/aws_config
+
+# MacPorts Installer addition on 2010-07-20_at_21:55:31: adding an appropriate PATH variable for use with MacPorts.
+PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# Finished adapting your PATH environment variable for use with MacPorts.
+# Prefer MacPorts GNU packages over BSD ones. E.g. if findutils is installed,
+# providing gfind, here we can get it as find
+PATH=/opt/local/libexec/gnubin:$PATH
+
+# pip, fab etc. are hidden here by MacPorts
+PATH=/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+
+export WORKON_HOME=~/.virtualenvs
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# RVM per http://rvm.beginrescueend.com/rvm/install/
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+#JRuby FFI doesn't like the - Mac OS ncurses for some reason.
+#export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
+
