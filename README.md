@@ -62,12 +62,12 @@ cd ~/dotfiles
 git pull
 git submodule update
 
+cd ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/
+git pull --no-rebase origin master
+
 cd ~/.oh-my-zsh
 git pull --no-rebase upstream master
 git push origin master
-
-cd ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/
-git pull --no-rebase origin master
 
 cd ~/.zprezto
 git pull --no-rebase upstream master
