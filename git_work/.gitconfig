@@ -1,0 +1,63 @@
+[core]
+	excludesfile = /Users/lhn/.gitignore_global
+
+[user]
+	name = Lorrin Nelson
+	email = lhn@mult.ifario.us
+
+# Merge config from http://www.andymcintosh.com/?p=33
+[merge]
+    keepBackup = false;
+    tool = p4merge
+[color]
+    ui = auto
+
+#This is no longer needed. Git has built-in support for p4merge now
+#[mergetool "p4merge"]
+#    cmd = p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+#    keepTemporaries = false
+#    trustExitCode = false
+#    keepBackup = false
+# Also don't need anything for XCode's FileMerge.app -- just use -t opendiff
+
+# Leave git diff alone because git diff | vim - is quick-n-easy vs. scrolling
+# around one file at a time in a GUI.
+# Can always use git difftool to launch p4merge
+#[diff]
+#    external = p4diff
+
+
+# Changes made by "Git setup niceties" https://gist.github.com/1149188
+# rerere is "reuse recorded resolution" http://progit.org/2010/03/08/rerere.html
+[rerere]
+	enabled = 1
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[alias]
+	br = branch
+	ci = commit -a
+	co = checkout
+	df = diff
+	dwc = diff -w -M --color-words
+	lg = log
+	ll = log -p
+	rb = rebase
+	fix = rebase -i origin/master
+	rbc = rebase --continue
+	re = remote
+	st = status
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+	up = pull --rebase
+[push]
+	default = upstream
+[branch]
+	autosetuprebase = always
+[difftool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	trustExitCode = true
+[remote "origin"]
+	push = HEAD
