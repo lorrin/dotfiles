@@ -52,3 +52,4 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 #JRuby FFI doesn't like the - Mac OS ncurses for some reason.
 #export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
 
+export PATH=$HOME/bin:$PATH
