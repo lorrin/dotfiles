@@ -45,11 +45,4 @@ export WORKON_HOME=~/.virtualenvs
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# RVM per http://rvm.beginrescueend.com/rvm/install/
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-#JRuby FFI doesn't like the - Mac OS ncurses for some reason.
-#export RUBY_FFI_NCURSES_LIB=/opt/local/lib/libncurses.5.dylib
-
 export PATH=$HOME/bin:$PATH
