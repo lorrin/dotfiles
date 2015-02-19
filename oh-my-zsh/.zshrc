@@ -88,3 +88,14 @@ unsetopt correct_all # Turn off the after-the-fact spelling correction prompts
 
 alias ssh_unsafe="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 alias scp_unsafe="scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+function papert () {
+    if [ $# -eq 0 ]; then
+        echo Select a configuration: $(ls ~/.papertrail.*.yml | sed -e 's/.*papertrail.\(.*\).yml/\1/g')
+        echo 'Configuration files are in ~/.papertrail.<name>.yml'
+    else
+        CFG=~/.papertrail.$1.yml
+        shift
+        papertrail -c "$CFG" "$@"
+    fi
+}
