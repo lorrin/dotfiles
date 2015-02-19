@@ -20,7 +20,7 @@ export JLINE_HOME=/Applications/jline-0.9.5
 #export PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin:$PIG_HOME/bin:$HIVE_HOME/bin
 
 # Maven (note Maven 3 is still using M2_* variables)
-export M2_HOME=/Applications/apache-maven-3.0.4
+export M2_HOME=$HOME/opt/apache-maven
 
 export PATH=$PATH:/opt/local/lib/postgresql90/bin
 
