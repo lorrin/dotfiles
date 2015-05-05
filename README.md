@@ -61,15 +61,12 @@ git pull --no-rebase origin master
 
 cd ~/.oh-my-zsh
 git pull --no-rebase origin master
-git push origin master
 
 cd ~/.zprezto
 git pull --no-rebase upstream master
-git push origin master
 
 cd ~/.spf13-vim-3
 git pull --no-rebase origin 3.0
-git push origin 3.0
 
 cd ~/.vim/bundle/vundle/
 git pull --no-rebase origin master
