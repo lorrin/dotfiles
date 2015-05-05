@@ -2,7 +2,7 @@ export LANG="de_DE.UTF-8"
 
 # Java
 # See http://stackoverflow.com/questions/6588390/where-is-java-home-on-osx-lion
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 #export CLOJURE_HOME=/Applications/clojure-1.2.0
 export JLINE_HOME=/Applications/jline-0.9.5
 #export PLAY2_HOME=/Applications/play-2.1.0
