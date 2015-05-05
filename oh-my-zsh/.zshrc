@@ -11,7 +11,7 @@ ZSH=$HOME/.oh-my-zsh
 # dieter theme has nice config of how hosts are represented, but no vi-mode indication
 # host_repr=('kale-wired' "%($fg_bold[green]kale")
 # flazz has good vi-mode indication
-ZSH_THEME="lorrin"
+ZSH_THEME="flazz"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"

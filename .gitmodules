@@ -1,12 +1,15 @@
-[submodule "oh-my-zsh/.oh-my-zsh"]
-	path = oh-my-zsh/.oh-my-zsh
-	url = git@github.com:lorrin/oh-my-zsh.git
-[submodule "spf13-vim-3/.spf13-vim-3"]
+[submodule "spf13-vim-3"]
 	path = spf13-vim-3/.spf13-vim-3
-	url = git@github.com:lorrin/spf13-vim.git
-[submodule "zprezto/.zprezto"]
+	url = git@github.com:spf13/spf13-vim.git
+[submodule "zprezto"]
 	path = zprezto/.zprezto
-	url = git@github.com:lorrin/prezto.git
+	url = git@github.com:sorin-ionescu/prezto.git
 [submodule "spf13-vim-3/.vim/bundle/vundle"]
 	path = spf13-vim-3/.vim/bundle/vundle
 	url = https://github.com/gmarik/vundle.git
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh/.oh-my-zsh
+	url = git@github.com:robbyrussell/oh-my-zsh.git
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting/zsh-syntax-highlighting
+	url = git@github.com:zsh-users/zsh-syntax-highlighting.git

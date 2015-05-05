@@ -35,9 +35,13 @@ Installation
     git submodule update
 </pre>
 1. Use `stow` to install symlinks for desired items. Do not use oh-my-zsh and zprezto together.
-  <pre>
+The default target for `stow` is the parent directory, which is why no additional command line
+arguments are needed except for zsh-syntax-highlighting, which is being inserted into the
+oh-my-zsh tree.
+<pre>
 cd ~/dotfiles
 for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim; do stow $item; done;
+stow --target oh-my-zsh/.oh-my-zsh/custom/plugins zsh-syntax-highlighting
 </pre>
 1. If applicable, include `local_<hostname>` in the list above.
 1. `cd ~/.vim/bundle/vundle`
@@ -46,27 +50,17 @@ for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim; do stow $item; d
 
 Getting Updates
 -------
-Once:
-<pre>
-cd ~/dotfiles/oh-my-zsh/.oh-my-zsh
-git remote add upstream git@github.com:robbyrussell/oh-my-zsh.git
-cd ~/dotfiles/spf13-vim-3/.spf13-vim-3/
-git remote add upstream git@github.com:spf13/spf13-vim.git
-cd ~/dotfiles/zprezto/.zprezto/
-git remote add upstream git@github.com:sorin-ionescu/prezto.git
-</pre>
-
 Each time:
 <pre>
 cd ~/dotfiles
 git pull
 git submodule update
 
-cd ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/
+cd ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/
 git pull --no-rebase origin master
 
 cd ~/.oh-my-zsh
-git pull --no-rebase upstream master
+git pull --no-rebase origin master
 git push origin master
 
 cd ~/.zprezto
@@ -74,7 +68,7 @@ git pull --no-rebase upstream master
 git push origin master
 
 cd ~/.spf13-vim-3
-git pull --no-rebase upstream 3.0
+git pull --no-rebase origin 3.0
 git push origin 3.0
 
 cd ~/.vim/bundle/vundle/
