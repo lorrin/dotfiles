@@ -21,7 +21,8 @@ s3cmd_compl() {
 }
 compctl -f -x 'p[1]' -K s3cmd_compl -- s3cmd
 
-alias vim="/Users/lhn/bin/mvim -v"
+# Disable because MacVim lacks Lua support, which spf13-vim now expects
+# alias vim="/Users/lhn/bin/mvim -v"
 
 # http://paintincode.blogspot.com/2010/08/install-pip-virtualenv.html
 source $(dirname $(which python))/virtualenvwrapper.sh
