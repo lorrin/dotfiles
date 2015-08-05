@@ -1,6 +1,12 @@
 # AWS with profile
 alias raw_aws=$(which aws)
-aws() { raw_aws --profile $* }
+aws() {
+    if [ "$1" = "--profile" ]; then
+        raw_aws $*
+    else
+        raw_aws --profile $*
+    fi
+}
 aws_profile_compl() {
     reply=( $(grep '^\[profile' ~/.aws/config | cut -d' ' -f2 | tr -d ']') )
 }
