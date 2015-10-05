@@ -1,0 +1,14 @@
+# Usually not used, but El Capitan broke the PATH and it needs to be fixed
+# here (because zshenv is run before the PATH gets broken)
+# http://www.zsh.org/mla/users//2015/msg00727.html
+# https://github.com/thoughtbot/dotfiles/issues/420
+
+# Move /usr/local/bin, /usr/bin, /bin, /usr/sbin, /sbin to back of the PATH.
+# This mostly works, but gets confused if the above are suffixes of other entries.
+for p in /usr/local/bin /usr/bin /bin /usr/sbin /sbin; do
+    echo $PATH | grep --quiet "$p:"
+    if [[ $? == 0 ]]; then
+        export PATH=$(echo $PATH | sed -e "s,$p:,,"):$p
+    fi
+done
+
