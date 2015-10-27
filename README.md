@@ -40,7 +40,7 @@ arguments are needed except for zsh-syntax-highlighting, which is being inserted
 oh-my-zsh tree.
 <pre>
 cd ~/dotfiles
-for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim; do stow $item; done;
+for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim psql; do stow $item; done;
 stow --target oh-my-zsh/.oh-my-zsh/custom/plugins zsh-syntax-highlighting
 </pre>
 1. If applicable, include `local_<hostname>` in the list above.
