@@ -1,6 +1,0 @@
-alias bibble='/opt/bibble5/bin/bibble5'
-alias psql='sudo -u postgres -H /usr/bin/psql'
-alias ack='ack-grep'
-alias p4v='/opt/p4v/bin/p4v'
-alias p4merge='/opt/p4v/bin/p4merge'
-alias qc='$HOME/bin/qc.sh'
