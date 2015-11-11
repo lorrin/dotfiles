@@ -1,8 +1,8 @@
 Installation
 ------------
-1. Install zsh, git, ruby, vim, stow.
+1. Install zsh, git, vim, stow.
   * vim on Linux: use `vim-nox` or `vim-gnome`.
-  * vim on Mac OS X: use `sudo port install vim +perl +python27 +tcl +ruby`
+  * vim on Mac OS X: use `sudo port install vim`
   * zsh on Mac OS X: use older stock zsh or `sudo port install zsh`
 1. Change default shell to zsh
   * Linux: `chsh -s /usr/bin/zsh`
@@ -19,63 +19,17 @@ Installation
               IdentityFile ~/.ssh/keyfile_name
 </pre>
       * `git clone git@github.com:lorrin/dotfiles.git`
-      * Adjust git config:
-       <pre>
-    cd ~/dotfiles
-    git config user.name "echo $(cat /etc/passwd | grep $USER | cut -d: -f 5 | cut -d, -f1)"
-    git config user.email "$USER@lorrin.org"
 </pre>
-  * Update submodule:
-    <pre>
-    cd ~/dotfiles
-    git submodule init
-    git submodule update
-    cd oh-my-zsh/.oh-my-zsh/
-    git submodule init
-    git submodule update
-</pre>
-1. Use `stow` to install symlinks for desired items. Do not use oh-my-zsh and zprezto together.
-The default target for `stow` is the parent directory, which is why no additional command line
-arguments are needed except for zsh-syntax-highlighting, which is being inserted into the
-oh-my-zsh tree.
-<pre>
-cd ~/dotfiles
-for item in git oh-my-zsh readline screen spf13-vim-3 tmux vim psql; do stow $item; done;
-stow --target oh-my-zsh/.oh-my-zsh/custom/plugins zsh-syntax-highlighting
-</pre>
-1. If applicable, include `local_<hostname>` in the list above.
-1. `cd ~/.vim/bundle/vundle`
-1. `git checkout master`
-1. Install vim bundles: `vim +BundleInstall! +BundleClean +q`
+1. `dotfiles/install_or_update.sh`
 
 Getting Updates
 -------
-Each time:
-<pre>
-cd ~/dotfiles
-git pull
-git submodule update
+1. `cd ~/dotfiles`
+1. `git pull`
+1. `./install_or_update.sh`
 
-cd ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/
-git pull --no-rebase origin master
-
-cd ~/.oh-my-zsh
-git pull --no-rebase origin master
-
-cd ~/.zprezto
-git pull --no-rebase upstream master
-
-cd ~/.spf13-vim-3
-git pull --no-rebase origin 3.0
-
-cd ~/.vim/bundle/vundle/
-git pull --no-rebase origin master
-
-vim +BundleInstall! +BundleClean +q
-</pre>
-
-Adding New Items
+Machine-specific configuration
 -------
-1. Create new directory
-2. `stow` it
-3. Update installation steps
+1. Create new directory `~/dotfiles/local_$(hostname -s)`
+1. Add dot-files into directory
+1. Update.
