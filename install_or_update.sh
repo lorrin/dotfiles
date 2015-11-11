@@ -18,7 +18,9 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 else
 	echo Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
-	git pull && git submodule update --init --recursive
+	git pull
+	git submodule sync
+	git submodule update --init --recursive
 fi
 
 if [ ! -d "$HOME/.vim_runtime" ]; then
