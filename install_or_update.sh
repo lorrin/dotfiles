@@ -37,11 +37,11 @@ fi
 
 # Make a symlink in $HOME to each of the .dotfiles in stows/
 echo Installing dotfiles.
-stow --target=$HOME --dir="$DOTFILES_DIR" stows
+stow --override=".*" --restow --target=$HOME --dir="$DOTFILES_DIR" stows
 
 if [ -d "$DOTFILES_DIR/local_$(hostname -s)" ]; then
 	echo "Using local overrides ($DOTFILES_DIR/local_$(hostname -s))"
-	stow --override=".*" --target=$HOME --dir="$DOTFILES_DIR" "local_$(hostname -s)"
+	stow --override=".*" --restow --target=$HOME --dir="$DOTFILES_DIR" "local_$(hostname -s)"
 else
 	echo "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
