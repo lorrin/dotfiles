@@ -35,6 +35,8 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'prompt' \
   'macports' \
+  'tmux' \
+  'syntax-highlighting'
 
 #
 # Editor
@@ -119,13 +121,13 @@ zstyle ':prezto:module:prompt' theme 'giddie'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
-# zstyle ':prezto:module:syntax-highlighting' highlighters \
-#   'main' \
-#   'brackets' \
-#   'pattern' \
-#   'cursor' \
-#   'root'
-#
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'cursor' \
+  'root'
+
 # Set syntax highlighting styles.
 # zstyle ':prezto:module:syntax-highlighting' styles \
 #   'builtin' 'bg=blue' \
@@ -156,7 +158,7 @@ zstyle ':prezto:module:prompt' theme 'giddie'
 # zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
-# zstyle ':prezto:module:tmux:iterm' integrate 'yes'
+zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 
 if [ -e ${ZDOTDIR:-$HOME}/.zpreztorc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zpreztorc.local
