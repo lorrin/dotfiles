@@ -13,8 +13,6 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 	for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 	  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 	done
-	# Remove stock .zpreztorc to enable stowing of custom one below.
-	rm "${ZDOTDIR:-$HOME}/.zpreztorc"
 else
 	echo Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
@@ -22,6 +20,9 @@ else
 	git submodule sync
 	git submodule update --init --recursive
 fi
+# Remove stock .zshrc and .zpreztorc to enable stowing of custom one below.
+rm "${ZDOTDIR:-$HOME}/.zshrc"
+rm "${ZDOTDIR:-$HOME}/.zpreztorc"
 
 if [ ! -d "$HOME/.vim_runtime" ]; then
 	echo Installing Ultimate vimrc
