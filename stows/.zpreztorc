@@ -33,7 +33,8 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt'
+  'prompt' \
+  'macports' \
 
 #
 # Editor
@@ -157,3 +158,20 @@ zstyle ':prezto:module:prompt' theme 'giddie'
 # Integrate with iTerm2.
 # zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 
+# Prefer MacPorts installed GNU toolchain over BSD if present
+if [ -d /opt/local/libexec/gnubin ]; then
+  export PATH=/opt/local/libexec/gnubin:$PATH
+fi
+
+# Set JAVA_HOME on OS X
+if [ -e /usr/libexec/java_home ]; then
+   function setjdk {
+      local ver=${1?Usage: setjdk <version>}
+      export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
+      PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
+      export PATH=$JAVA_HOME/bin:$PATH
+   }
+   setjdk 1.8
+fi
+
+export EDITOR=vim
