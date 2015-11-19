@@ -36,6 +36,17 @@ else
 	git pull
 fi
 
+# Install Tmux Plugin Manager per https://github.com/tmux-plugins/tpm
+# (Still need to install your plug-ins one time with Ctrl-B I)
+if [ ! -d "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm" ]; then
+	echo Installing Tmux Plugin Manager
+	git clone https://github.com/tmux-plugins/tpm "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
+else
+	echo Updating Tmux Plugin Manager
+	cd "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
+	git pull
+fi
+
 # Make a symlink in $HOME to each of the .dotfiles in stows/
 echo Installing dotfiles.
 stow --override=".*" --restow --target=$HOME --dir="$DOTFILES_DIR" stows
