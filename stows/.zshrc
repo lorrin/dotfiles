@@ -15,6 +15,11 @@ fi
 
 export EDITOR=vim
 
+# Allow ctrl-r / ctrl-f to cycle through history matches.
+# Note in vicmd mode ? and / are bound to these, and ctrl-r is bound to redo.
+bindkey -M viins '^R' history-incremental-pattern-search-backward
+bindkey -M viins '^F' history-incremental-pattern-search-forward
+
 # Prefer MacPorts installed GNU toolchain over BSD if present
 [[ -d /opt/local/libexec/gnubin ]] && export PATH=/opt/local/libexec/gnubin:$PATH
 
