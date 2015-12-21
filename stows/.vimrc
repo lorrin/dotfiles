@@ -26,3 +26,18 @@ let g:ctrlp_cmd = 'CtrlP'
 " mode.
 map <leader>J :CtrlPBuffer<cr>
 map <c-b> <PageUp>
+
+
+" hitting Tab in insert mode will produce the appropriate number of spaces
+set expandtab
+" how many columns a tab character counts for
+set tabstop=8
+" how many columns vim uses when you hit Tab in insert mode
+set softtabstop=4
+" how many columns text is indented with the reindent operations (<< and >>) and automatic C-style indentation
+set shiftwidth=4
+" display whitespace
+set list
+" control how whitespace is displayed
+" set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
+set listchars=tab:>·,trail:~,extends:>,precedes:<
