@@ -19,6 +19,8 @@ export EDITOR=vim
 # Note in vicmd mode ? and / are bound to these, and ctrl-r is bound to redo.
 bindkey -M viins '^R' history-incremental-pattern-search-backward
 bindkey -M viins '^F' history-incremental-pattern-search-forward
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
 
 # Prefer MacPorts installed GNU toolchain over BSD if present
 [[ -d /opt/local/libexec/gnubin ]] && export PATH=/opt/local/libexec/gnubin:$PATH

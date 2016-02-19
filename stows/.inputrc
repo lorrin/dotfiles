@@ -1,8 +1,10 @@
 set editing-mode vi
-set keymap vi
 
+set keymap vi-command
 "?":non-incremental-forward-search-history
 "/":non-incremental-reverse-search-history
+
+set keymap vi
 "C-a":beginning-of-line
 "C-e":end-of-line
 "C-r":reverse-search-history
