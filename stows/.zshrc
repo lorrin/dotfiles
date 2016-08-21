@@ -55,3 +55,5 @@ alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x0
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
+
+true
