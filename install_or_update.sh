@@ -10,9 +10,6 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 	echo Installing Prezto
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 	setopt EXTENDED_GLOB
-	for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-	  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-	done
 else
 	echo Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
@@ -20,6 +17,21 @@ else
 	git submodule sync
 	git submodule update --init --recursive
 fi
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    # if target already exists and isn't equivalent to the link we want to create and isn't an override from the stows
+    # directory, then alert.
+    if [ -e "${ZDOTDIR:-$HOME}/.${rcfile:t}" ]; then
+        if [[ ! "${ZDOTDIR:-$HOME}/.${rcfile:t}" -ef  $rcfile ]]; then
+            if [ ! -e ${DOTFILES_DIR}/stows/.${rcfile:t} ]; then
+                echo "WARN: ${ZDOTDIR:-$HOME}/.${rcfile:t} already exists, will not create link to $rcfile."
+            fi
+        fi
+    else
+        echo "Linking ${ZDOTDIR:-$HOME}/.${rcfile:t} -> $rcfile"
+        ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    fi
+done
 # Remove stock .zshrc and .zpreztorc to enable stowing of custom one below.
 rm "${ZDOTDIR:-$HOME}/.zshrc"
 rm "${ZDOTDIR:-$HOME}/.zpreztorc"
