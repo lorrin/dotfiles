@@ -13,6 +13,13 @@ fi
 
 # Customize to your needs...
 
+
+# Change the prompt character back to standard $ rather than giddie default.
+PROMPT='%(?..%F{red}%B-> [%?]%b%f
+)%F{magenta}%n%f@%F{yellow}%m%f|%F{green}${_prompt_giddie_pwd}%f${vcs_info_msg_0_}
+%F{blue}$%f '
+
+
 export EDITOR=vim
 
 # Allow ctrl-r / ctrl-f to cycle through history matches.
