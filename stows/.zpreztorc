@@ -32,8 +32,9 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'completion' \
   'macports' \
+  'completion' \
+  'fasd' \
   'tmux' \
   'archive' \
   'git' \
