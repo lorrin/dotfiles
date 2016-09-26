@@ -33,11 +33,10 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' \
   'macports' \
   'tmux' \
-  'syntax-highlighting'
-
+  'syntax-highlighting' \
+  'prompt'
 #
 # Autosuggestions
 #
