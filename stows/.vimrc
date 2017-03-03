@@ -41,3 +41,8 @@ set list
 " control how whitespace is displayed
 " set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 set listchars=tab:>·,trail:~,extends:>,precedes:<
+
+" Do not store data from clear-text password when using pass
+" https://www.passwordstore.org/
+" https://lists.zx2c4.com/pipermail/password-store/2015-July/001618.html
+au BufNewFile,BufRead /dev/shm/pass.* setlocal noswapfile nobackup noundofile
