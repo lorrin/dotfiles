@@ -1,5 +1,10 @@
 #!/usr/bin/env zsh
 
+if ! hash stow 2>/dev/null; then
+    echo "GNU stow is required to proceed."
+    exit 1
+fi
+
 # ${o:a:h} is Zsh magic for directory where script resides
 # 0 (path to script), :a (absolute path), :h (head (drop filename))
 # See http://zsh.sourceforge.net/Doc/Release/Expansion.html#Modifiers
