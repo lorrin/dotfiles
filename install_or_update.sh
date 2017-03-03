@@ -48,14 +48,16 @@ else
 	git pull
 fi
 
-# Install Tmux Plugin Manager per https://github.com/tmux-plugins/tpm
-if [ ! -d "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm" ]; then
-	echo Installing Tmux Plugin Manager
-	git clone https://github.com/tmux-plugins/tpm "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
-else
-	echo Updating Tmux Plugin Manager
-	cd "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
-	git pull
+if hash tmux 2>/dev/null; then
+    # Install Tmux Plugin Manager per https://github.com/tmux-plugins/tpm
+    if [ ! -d "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm" ]; then
+            echo Installing Tmux Plugin Manager
+            git clone https://github.com/tmux-plugins/tpm "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
+    else
+            echo Updating Tmux Plugin Manager
+            cd "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
+            git pull
+    fi
 fi
 
 # Make a symlink in $HOME to each of the .dotfiles in stows/
@@ -69,7 +71,9 @@ else
 	echo "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
 
-echo Updating Tmux Plugins
-tmux source ~/.tmux.conf
-~/.tmux/plugins/tpm/bin/install_plugins
-~/.tmux/plugins/tpm/bin/update_plugins all
+if hash tmux 2>/dev/null; then
+    echo Updating Tmux Plugins
+    tmux source ~/.tmux.conf
+    ~/.tmux/plugins/tpm/bin/install_plugins
+    ~/.tmux/plugins/tpm/bin/update_plugins all
+fi
