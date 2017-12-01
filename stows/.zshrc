@@ -63,4 +63,6 @@ alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x0
 
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
+PATH=$PATH:$HOME/bin
+
 true
