@@ -13,12 +13,18 @@ fi
 
 # Customize to your needs...
 
+# Turn off SHARE_HISTORY, which jumbles together the history of each
+# open session and works against having task-specific shells in long-
+# running tmux sessions.
+# http://zsh.sourceforge.net/Guide/zshguide02.html#l18
+# INC_APPEND_HISTORY is the good one, and that's already enabled too.
+# https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh
+unsetopt SHARE_HISTORY
 
 # Change the prompt character back to standard $ rather than giddie default.
 PROMPT='%(?..%F{red}%B-> [%?]%b%f
 )%F{magenta}%n%f@%F{yellow}%m%f|%F{green}${_prompt_giddie_pwd}%f${vcs_info_msg_0_}
 %F{blue}$%f '
-
 
 export EDITOR=vim
 
