@@ -41,9 +41,11 @@ zstyle ':prezto:load' pmodule \
   'tmux' \
   'archive' \
   'git' \
+  'archive' \
+  'autosuggestions' \
+  'docker' \
   'syntax-highlighting' \
   'history-substring-search' \
-  'autosuggestions' \
   'prompt'
 
 #
@@ -231,6 +233,7 @@ zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 # before deleting or overwriting files. Set to 'no' to disable this safer
 # behavior.
 # zstyle ':prezto:module:utility' safe-ops 'yes'
+zstyle ':prezto:module:utility' safe-ops 'no'
 
 if [ -e ${ZDOTDIR:-$HOME}/.zpreztorc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zpreztorc.local
