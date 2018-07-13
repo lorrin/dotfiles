@@ -14,12 +14,11 @@ Installation
   * for read-write use:
       * install GitHub SSH keys
       * `~/.ssh/config` contains:
-        <pre>
+        ```
             Host github.com
               IdentityFile ~/.ssh/keyfile_name
-</pre>
+        ```
       * `git clone git@github.com:lorrin/dotfiles.git`
-</pre>
 1. `dotfiles/install_or_update.sh`
 
 Getting Updates
