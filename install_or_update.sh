@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-if ! hash stow 2>/dev/null; then
+if ! which stow 2>/dev/null; then
     echo "GNU stow is required to proceed."
     exit 1
 fi
