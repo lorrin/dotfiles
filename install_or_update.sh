@@ -53,7 +53,7 @@ else
 	git pull
 fi
 
-if hash tmux 2>/dev/null; then
+if which tmux 2>/dev/null; then
     # Install Tmux Plugin Manager per https://github.com/tmux-plugins/tpm
     if [ ! -d "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm" ]; then
             echo Installing Tmux Plugin Manager
@@ -63,6 +63,8 @@ if hash tmux 2>/dev/null; then
             cd "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
             git pull
     fi
+else
+    echo "tmux not installed; skipping Tmux Plugin Manager"
 fi
 
 # Make a symlink in $HOME to each of the .dotfiles in stows/
@@ -76,9 +78,11 @@ else
 	echo "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
 
-if hash tmux 2>/dev/null; then
+if which tmux 2>/dev/null; then
     echo Updating Tmux Plugins
     tmux source ~/.tmux.conf
     ~/.tmux/plugins/tpm/bin/install_plugins
     ~/.tmux/plugins/tpm/bin/update_plugins all
+else
+    echo "tmux not installed; skipping Tmux Plugin update"
 fi
