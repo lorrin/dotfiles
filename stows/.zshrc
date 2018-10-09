@@ -61,6 +61,9 @@ alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x0
 # Additional git aliases.
 alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs git branch -d"
 
+# GPG_TTY for git code signing
+export GPG_TTY=$(tty)
+
 # Add iTerm shell integration, if available
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
