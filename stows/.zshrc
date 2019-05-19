@@ -76,5 +76,9 @@ if [[ -d  $HOME/node_modules/.bin ]]; then
     export PATH=$PATH:$HOME/node_modules/.bin
 fi
 
+# Drop-in replacements for standard commands
+if type bat > /dev/null; then
+    alias cat='bat'
+fi
 
 true
