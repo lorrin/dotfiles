@@ -4,3 +4,5 @@
 [user]
 	name = Lorrin Nelson
 	email = lorrin@lorrin.org
+[core]
+	editor = vim
