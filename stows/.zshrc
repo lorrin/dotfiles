@@ -81,4 +81,6 @@ if type bat > /dev/null; then
     alias cat='bat'
 fi
 
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+
 true
