@@ -71,4 +71,10 @@ export GPG_TTY=$(tty)
 
 PATH=$PATH:$HOME/bin
 
+# Node.js / npm
+if [[ -d  $HOME/node_modules/.bin ]]; then
+    export PATH=$PATH:$HOME/node_modules/.bin
+fi
+
+
 true
