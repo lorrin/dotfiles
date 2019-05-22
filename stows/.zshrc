@@ -83,4 +83,10 @@ fi
 
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 
+# If setxkbmap exists, use it to change capslock to escape
+if setxkbmap_path="$(type -p setxkbmap)" && [[ ! -z $setxkbmap_path  ]]; then
+    # https://askubuntu.com/a/830343
+    setxkbmap -option caps:escape
+fi
+
 true
