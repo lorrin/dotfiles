@@ -70,8 +70,6 @@ export GPG_TTY=$(tty)
 # Add iTerm shell integration, if available
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
-[[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
-
 PATH=$PATH:$HOME/bin
 
 # Node.js / npm
@@ -91,5 +89,8 @@ if setxkbmap_path="$(type -p setxkbmap)" && [[ ! -z $setxkbmap_path  ]]; then
     # https://askubuntu.com/a/830343
     setxkbmap -option caps:escape
 fi
+
+# Source machine-specific .zshrc
+[[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
 true
