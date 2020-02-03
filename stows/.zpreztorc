@@ -45,8 +45,8 @@ zstyle ':prezto:load' pmodule \
   'docker' \
   'syntax-highlighting' \
   'history-substring-search' \
-  'prompt'
-
+  'prompt' \
+  'node'
 #
 # Autosuggestions
 #
