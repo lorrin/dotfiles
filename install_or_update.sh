@@ -51,7 +51,11 @@ else
 	echo Updating Ultimate vimrc
 	cd "${ZDOTDIR:-$HOME}/.vim_runtime"
 	git pull
+        python3 update_plugins.py
 fi
+cd "${ZDOTDIR:-$HOME}/.vim_runtime"
+./install_awesome_vimrc.sh
+
 
 if which tmux 2>/dev/null; then
     # Install Tmux Plugin Manager per https://github.com/tmux-plugins/tpm
