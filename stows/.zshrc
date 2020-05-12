@@ -29,9 +29,10 @@ fi
 unsetopt SHARE_HISTORY
 
 # Change the prompt character back to standard $ rather than giddie default.
-PROMPT='%(?..%F{red}%B-> [%?]%b%f
-)%F{magenta}%n%f@%F{yellow}%m%f|%F{green}${_prompt_giddie_pwd}%f${vcs_info_msg_0_}
-%F{blue}$%f '
+# (skip now; using power10k instead)
+# PROMPT='%(?..%F{red}%B-> [%?]%b%f
+# )%F{magenta}%n%f@%F{yellow}%m%f|%F{green}${_prompt_giddie_pwd}%f${vcs_info_msg_0_}
+# %F{blue}$%f '
 
 export EDITOR=vim
 
