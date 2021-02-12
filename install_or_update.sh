@@ -73,11 +73,11 @@ fi
 
 # Make a symlink in $HOME to each of the .dotfiles in stows/
 echo Installing dotfiles.
-stow --override=".*" --restow --target=$HOME --dir="$DOTFILES_DIR" stows
+stow --override=".*" --verbose --restow --target=$HOME --dir="$DOTFILES_DIR" --ignore=.vim_runtime stows
 
 if [ -d "$DOTFILES_DIR/local_$(hostname -s)" ]; then
 	echo "Using local overrides ($DOTFILES_DIR/local_$(hostname -s))"
-	stow --override=".*" --restow --target=$HOME --dir="$DOTFILES_DIR" "local_$(hostname -s)"
+	stow --override=".*" --verbose --restow --target=$HOME --dir="$DOTFILES_DIR" --ignore=.vim_runtime "local_$(hostname -s)"
 else
 	echo "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
