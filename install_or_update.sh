@@ -18,7 +18,7 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 else
 	echo Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
-	git pull
+	git pull --ff-only
 	git submodule sync
 	git submodule update --init --recursive
 fi
@@ -50,8 +50,8 @@ if [ ! -d "$HOME/.vim_runtime" ]; then
 else
 	echo Updating Ultimate vimrc
 	cd "${ZDOTDIR:-$HOME}/.vim_runtime"
-	git pull
-        python3 update_plugins.py
+	git pull --ff-only
+	python3 update_plugins.py
 fi
 cd "${ZDOTDIR:-$HOME}/.vim_runtime"
 ./install_awesome_vimrc.sh
@@ -65,7 +65,7 @@ if which tmux 2>/dev/null; then
     else
             echo Updating Tmux Plugin Manager
             cd "${ZDOTDIR:-$HOME}/.tmux/plugins/tpm"
-            git pull
+            git pull --ff-only
     fi
 else
     echo "tmux not installed; skipping Tmux Plugin Manager"
