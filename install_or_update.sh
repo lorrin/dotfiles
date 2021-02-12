@@ -82,7 +82,7 @@ else
 	echo "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
 
-if which tmux 2>/dev/null; then
+if which tmux 2>&1 >/dev/null; then
     echo Updating Tmux Plugins
     tmux source ~/.tmux.conf
     ~/.tmux/plugins/tpm/bin/install_plugins
