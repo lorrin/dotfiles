@@ -66,11 +66,18 @@ alias gl="git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x
 # git log all
 alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 # More git aliases
-# git fetch all
-alias gfa="git fetch --all"
-
-# Additional git aliases.
+# git branch upstream master
+function gbum(){
+    git checkout -b $1 upstream/master
+}
+# git branch origin master
+function gbom(){
+    git checkout -b $1 origin/master
+}
 alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs git branch -d"
+# git branch delete merged
+alias gbxm="git branch --merged | grep -vP '^\* ' | xargs git branch -d"
+
 
 # GPG_TTY for git code signing
 export GPG_TTY=$(tty)
