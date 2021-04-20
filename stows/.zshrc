@@ -74,9 +74,9 @@ function gbum(){
 function gbom(){
     git checkout -b $1 origin/master
 }
-alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs git branch -d"
+alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git branch delete merged
-alias gbxm="git branch --merged | grep -vP '^\* ' | xargs git branch -d"
+alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 
 
 # GPG_TTY for git code signing
