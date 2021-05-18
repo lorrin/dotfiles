@@ -1,1 +1,9 @@
 source ~/.profile
+source ~/monkey/server/venv/bin/activate
+
+export RALLY_API_TOKEN=$(psql -qtAX -h localhost -U postgres sdvi -c "SELECT token FROM \"User\" u, \"UserApiToken\" uat, \"Organization\" o WHERE u.id = uat.\"userId\" AND u.\"organizationId\" = o.id AND o.subdomain = 'dev.sdvi.com' AND u.email = '$sdvi_user_email';")
+export RALLY_URL=https://dev.sdvi.com
+
+PATH=~/lorrin-tools:$PATH
+# Dedupe path from https://unix.stackexchange.com/a/149054
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++  } split(/:/, $ENV{PATH}))')"
