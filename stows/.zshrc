@@ -85,7 +85,8 @@ export GPG_TTY=$(tty)
 # Add iTerm shell integration, if available
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
-PATH=$PATH:$HOME/bin
+# $HOME/.local/bin is for Pip-installed binaries
+PATH=$PATH:$HOME/bin:$HOME/.local/bin
 
 # Node.js / npm
 if [[ -d  $HOME/node_modules/.bin ]]; then
