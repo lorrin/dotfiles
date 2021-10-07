@@ -55,6 +55,9 @@ if [ -e /usr/libexec/java_home ]; then
       export PATH=$JAVA_HOME/bin:$PATH
    }
    setjdk 1.8
+# Set JAVA_HOME otherwise
+elif which java > /dev/null; then
+    export JAVA_HOME=$(dirname $(dirname $(realpath $(which java))))
 fi
 
 alias ssh_noauth="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
