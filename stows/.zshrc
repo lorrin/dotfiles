@@ -109,10 +109,5 @@ fi
 # Source machine-specific .zshrc
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
-# https://unix.stackexchange.com/questions/424602/is-it-possible-to-set-a-constant-lowest-cpu-frequency-under-the-modern-pstate
-alias silent="echo 25 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
-alias quiet="echo 50 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
-alias fast="echo 100 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

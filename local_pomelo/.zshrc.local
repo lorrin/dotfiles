@@ -11,3 +11,9 @@ alias vpn-down="sudo nordvpnteams disconnect"
 alias vpn-status="sudo nordvpnteams status"
 alias psql-dev="psql -h dev.sdvi.com -U postgres sdvi"
 alias psql-staging="psql -h dev.sdvi.com -p 5433 -U postgres sdvi"
+
+# https://unix.stackexchange.com/questions/424602/is-it-possible-to-set-a-constant-lowest-cpu-frequency-under-the-modern-pstate
+alias silent="echo 25 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
+alias quiet="echo 50 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
+alias fast="echo 100 | sudo tee /sys/devices/system/cpu/intel_pstate/max_perf_pct"
+
