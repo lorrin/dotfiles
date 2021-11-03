@@ -88,6 +88,9 @@ function gbom(){
 alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git branch delete merged
 alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
+# git fetch (all)
+alias gfa="git fetch --all --prune"
+alias gf="git fetch --prune"
 
 
 # GPG_TTY for git code signing
