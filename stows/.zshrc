@@ -56,7 +56,7 @@ if [ -e /usr/libexec/java_home ]; then
            PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
            export PATH=$JAVA_HOME/bin:$PATH
         }
-        setjdk 1.8
+        setjdk 11
     fi
 # Set JAVA_HOME otherwise
 elif which java > /dev/null; then
