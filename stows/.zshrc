@@ -49,7 +49,7 @@ bindkey '^E' end-of-line
 # Set JAVA_HOME on OS X
 if [ -e /usr/libexec/java_home ]; then
     # Do nothing if no Java JVMs are installed
-    if /usr/libexec/java_home --failfast 2> /dev/null; then
+    if /usr/libexec/java_home --failfast > /dev/null; then
         function setjdk {
            local ver=${1?Usage: setjdk <version>}
            export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
