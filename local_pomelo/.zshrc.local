@@ -1,9 +1,4 @@
-# virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Code
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-source /usr/local/bin/virtualenvwrapper_lazy.sh
 export PATH=$PATH:$HOME/opt/diff-so-fancy
 export PATH=$PATH:$HOME/.cargo/bin
 alias vpn-up="sudo nordvpnteams gateways | awk '/Private gateways/,/Shared gateways/' | grep 'Los Angeles' | sed -e 's/.*│\([^│]*\)│.*/\1/' | awk '{print $1}' | xargs sudo nordvpnteams connect"

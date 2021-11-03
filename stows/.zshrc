@@ -99,8 +99,19 @@ export GPG_TTY=$(tty)
 # Add iTerm shell integration, if available
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
-# $HOME/.local/bin is for Pip-installed binaries
-PATH=$PATH:$HOME/bin:$HOME/.local/bin
+# Python
+PATH=$PATH:$(python -c "import sysconfig; print(sysconfig.get_path('scripts'))")
+PATH=$PATH:$(python -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))")
+
+# Python virtualenvwrapper
+if which virtualenvwrapper.sh > /dev/null; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    mkdir -p $WORKON_HOME
+    source $(which virtualenvwrapper.sh)
+fi
+
+
+PATH=$PATH:$HOME/bin
 
 # Node.js / npm
 if [[ -d  $HOME/node_modules/.bin ]]; then
