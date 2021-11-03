@@ -48,13 +48,16 @@ bindkey '^E' end-of-line
 
 # Set JAVA_HOME on OS X
 if [ -e /usr/libexec/java_home ]; then
-   function setjdk {
-      local ver=${1?Usage: setjdk <version>}
-      export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
-      PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
-      export PATH=$JAVA_HOME/bin:$PATH
-   }
-   setjdk 1.8
+    # Do nothing if no Java JVMs are installed
+    if /usr/libexec/java_home --failfast 2> /dev/null; then
+        function setjdk {
+           local ver=${1?Usage: setjdk <version>}
+           export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
+           PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
+           export PATH=$JAVA_HOME/bin:$PATH
+        }
+        setjdk 1.8
+    fi
 # Set JAVA_HOME otherwise
 elif which java > /dev/null; then
     export JAVA_HOME=$(dirname $(dirname $(realpath $(which java))))
