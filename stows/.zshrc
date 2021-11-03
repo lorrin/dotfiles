@@ -100,18 +100,33 @@ export GPG_TTY=$(tty)
 [[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
 
 # Python
-PATH=$PATH:$(python -c "import sysconfig; print(sysconfig.get_path('scripts'))")
-PATH=$PATH:$(python -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))")
+if which python3 > /dev/null; then
+    # Somewhat bogus to assume virtualenvwrapper was installed to Python 3; could have been Python 2
+    # Proper thing to do would be to see which one has the virtualenvwrapper module available.
+    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 
-# Python virtualenvwrapper
-if which virtualenvwrapper.sh > /dev/null; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    mkdir -p $WORKON_HOME
-    source $(which virtualenvwrapper.sh)
+    PYTHON_SYSTEM_SCRIPTS="$(python3 -c "import sysconfig; print(sysconfig.get_path('scripts'))")"
+    export PATH=$PATH:"$PYTHON_SYSTEM_SCRIPTS"
+    PYTHON_USER_SCRIPTS="$(python3 -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))")"
+    export PATH=$PATH:"$PYTHON_USER_SCRIPTS"
+    if which virtualenvwrapper.sh > /dev/null; then
+        MYSTERY_SCRIPTS=$(dirname $(which virtualenvwrapper.sh))
+    fi
+    for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS"; do
+        if [ -e "${P}/virtualenvwrapper.sh" ]; then
+            export WORKON_HOME=$HOME/.virtualenvs
+            mkdir -p $WORKON_HOME
+            source "${P}/virtualenvwrapper.sh"
+            break
+        fi
+    done
+    if which virtualenvwrapper.sh > /dev/null; then
+            source `which virtualenvwrapper.sh`
+    fi
 fi
 
 
-PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/bin
 
 # Node.js / npm
 if [[ -d  $HOME/node_modules/.bin ]]; then
