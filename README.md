@@ -4,6 +4,7 @@
     - vim on Linux: use vim-nox or vim-gnome.
     - vim on Mac OS X: use sudo port install vim
     - zsh on Mac OS X: use older stock zsh or sudo port install zsh
+1. Install the Python requests module
 1. Change default shell to zsh
     - Linux: `chsh -s /usr/bin/zsh`
     - Mac OS X with MacPorts zsh: `sudo chsh -s /opt/local/bin/zsh <user>`
