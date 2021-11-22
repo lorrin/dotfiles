@@ -157,3 +157,11 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# iTerm2
+# https://superuser.com/a/599156
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
+# https://gitlab.com/gnachman/iterm2/-/wikis/tmux-Integration-Best-Practices#how-do-i-use-shell-integration
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
