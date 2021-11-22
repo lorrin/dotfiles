@@ -124,7 +124,13 @@ if which python3 > /dev/null; then
             source `which virtualenvwrapper.sh`
     fi
 fi
-
+if which poetry > /dev/null; then
+    POETRY_COMPLETIONS="$HOME/.zprezto/modules/completion/external/src/_poetry"
+    if ! [ -e "$POETRY_COMPLETIONS" ]; then
+        echo "Installing poetry tab completions to $POETRY_COMPLETIONS"
+        poetry completions zsh > "$POETRY_COMPLETIONS"
+    fi
+fi
 
 export PATH=$PATH:$HOME/bin
 
