@@ -56,5 +56,6 @@
     syntax-theme = Vibrant Sunburst
     whitespace-error-style = "#280050" reverse
     zero-style = syntax
+
 [commit]
 	gpgsign = true

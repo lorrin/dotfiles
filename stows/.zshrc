@@ -97,7 +97,14 @@ alias gf="git fetch --prune"
 export GPG_TTY=$(tty)
 
 # Add iTerm shell integration, if available
-[[ -e ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL` ]] && source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
+if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+    INTEGRATION="${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`"
+    if ! [[ -e "${INTEGRATION}" ]]; then
+        echo "Fetching iTerm shell integration"
+        curl -L https://iterm2.com/shell_integration/zsh -o "$INTEGRATION"
+    fi
+    source ${ZDOTDIR:-$HOME}/.iterm2_shell_integration.`basename $SHELL`
+fi
 
 # Python
 if which python3 > /dev/null; then
