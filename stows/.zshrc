@@ -108,27 +108,31 @@ fi
 
 # Python
 if which python3 > /dev/null; then
-    # Somewhat bogus to assume virtualenvwrapper was installed to Python 3; could have been Python 2
-    # Proper thing to do would be to see which one has the virtualenvwrapper module available.
-    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-
     PYTHON_SYSTEM_SCRIPTS="$(python3 -c "import sysconfig; print(sysconfig.get_path('scripts'))")"
     export PATH=$PATH:"$PYTHON_SYSTEM_SCRIPTS"
     PYTHON_USER_SCRIPTS="$(python3 -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))")"
     export PATH=$PATH:"$PYTHON_USER_SCRIPTS"
-    if which virtualenvwrapper.sh > /dev/null; then
-        MYSTERY_SCRIPTS=$(dirname $(which virtualenvwrapper.sh))
-    fi
-    for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS"; do
-        if [ -e "${P}/virtualenvwrapper.sh" ]; then
-            export WORKON_HOME=$HOME/.virtualenvs
-            mkdir -p $WORKON_HOME
-            source "${P}/virtualenvwrapper.sh"
-            break
+
+    # Somewhat bogus to assume virtualenvwrapper was installed to Python 3; could have been Python 2
+    # Proper thing to do would be to see which one has the virtualenvwrapper module available.
+    # This is even more bogus if a virtualenv is already active and .zshrc is re-sourced.
+    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+
+    if python3 -m pip list | grep -P '^virtualenv\s' > /dev/null; then
+        if which virtualenvwrapper.sh > /dev/null; then
+            MYSTERY_SCRIPTS=$(dirname $(which virtualenvwrapper.sh))
         fi
-    done
-    if which virtualenvwrapper.sh > /dev/null; then
-            source `which virtualenvwrapper.sh`
+        for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS" "$MYSTERY_SCRIPTS"; do
+            if [ -e "${P}/virtualenvwrapper.sh" ]; then
+                export WORKON_HOME=$HOME/.virtualenvs
+                mkdir -p $WORKON_HOME
+                source "${P}/virtualenvwrapper.sh"
+                break
+            fi
+        done
+        if which virtualenvwrapper.sh > /dev/null; then
+                source `which virtualenvwrapper.sh`
+        fi
     fi
 fi
 if which poetry > /dev/null; then
