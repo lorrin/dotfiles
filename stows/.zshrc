@@ -169,7 +169,10 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# iTerm2
+# iTerm2 for setting title
+# (For use either without any tmux, or with tmux and iTerm tmux integration,
+# where tmux commands cannot be directly issued with prefix (ctrl-b) and ctrl-b-r
+# thus does not work to rename.
 # https://superuser.com/a/599156
 function title {
     echo -ne "\033]0;"$*"\007"
