@@ -169,13 +169,17 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# iTerm2 for setting title
-# (For use either without any tmux, or with tmux and iTerm tmux integration,
-# where tmux commands cannot be directly issued with prefix (ctrl-b) and ctrl-b-r
-# thus does not work to rename.
-# https://superuser.com/a/599156
 function title {
-    echo -ne "\033]0;"$*"\007"
+    if { [ "$TERM" = "screen" ] && [ -n "$TMUX" ] }; then 
+        # Usually in tmux you just do prefix-r (e.g. ctrl-b-r) to change the title, but
+        # with iTerm2 tmux integration it is not possible to directly issue tmux commands.
+        # Hence the need for this alias.
+        tmux rename-window "$*"
+    else
+        # For use without tmux; see https://superuser.com/a/599156
+        echo -ne "\033]0;"$*"\007"
+    fi
 }
+
 # https://gitlab.com/gnachman/iterm2/-/wikis/tmux-Integration-Best-Practices#how-do-i-use-shell-integration
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
