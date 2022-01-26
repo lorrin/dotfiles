@@ -118,7 +118,7 @@ if which python3 > /dev/null; then
     # This is even more bogus if a virtualenv is already active and .zshrc is re-sourced.
     export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 
-    if python3 -m pip list | grep -P '^virtualenv\s' > /dev/null; then
+    if python3 -m pip 2> /dev/null > /dev/null && python3 -m pip list | grep -P '^virtualenv\s' > /dev/null; then
         if which virtualenvwrapper.sh > /dev/null; then
             MYSTERY_SCRIPTS=$(dirname $(which virtualenvwrapper.sh))
         fi
@@ -130,9 +130,6 @@ if which python3 > /dev/null; then
                 break
             fi
         done
-        if which virtualenvwrapper.sh > /dev/null; then
-                source `which virtualenvwrapper.sh`
-        fi
     fi
 fi
 if which poetry > /dev/null; then
