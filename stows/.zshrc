@@ -180,3 +180,8 @@ function title {
 
 # https://gitlab.com/gnachman/iterm2/-/wikis/tmux-Integration-Best-Practices#how-do-i-use-shell-integration
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
+
+# Exa alternative to ls. Note that it is not a drop-in replacement. https://the.exa.website/
+if type exa > /dev/null; then
+    alias ls='exa --all --long --classify --header --group --git --icons --color-scale'
+fi
