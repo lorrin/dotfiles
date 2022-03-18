@@ -150,6 +150,7 @@ fi
 # Drop-in replacements for standard commands
 if type bat > /dev/null; then
     alias cat='bat'
+    export PAGER="`which bat` --style plain"
 fi
 
 alias preview="fzf --preview 'bat --color \"always\" {}'"
