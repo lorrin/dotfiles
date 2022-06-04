@@ -107,11 +107,11 @@ else
 	notice "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
 
-if which tmux >/dev/null; then
+if type tmux >/dev/null; then
     section Updating Tmux Plugins
     tmux source ~/.tmux.conf
     ~/.tmux/plugins/tpm/bin/install_plugins
     ~/.tmux/plugins/tpm/bin/update_plugins all
 else
-    section "----- tmux not installed; skipping Tmux Plugin update"
+    section "tmux not installed; skipping Tmux Plugin update"
 fi
