@@ -193,3 +193,9 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 if type exa > /dev/null; then
     alias ls='exa --all --long --classify --header --group --git --icons --color-scale'
 fi
+
+# pgcli is a postgres client that does auto-completion and syntax highlighting
+if type pgcli > /dev/null; then
+    alias psql=pgcli
+fi
+
