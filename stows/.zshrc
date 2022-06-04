@@ -147,7 +147,7 @@ if [[ -d  $HOME/node_modules/.bin ]]; then
     export PATH=$PATH:$HOME/node_modules/.bin
 fi
 
-# Drop-in replacements for standard commands
+# bat is a cat(1) clone with syntax highlighting and Git integration.
 if type bat > /dev/null; then
     alias cat='bat'
     export PAGER="`which bat` --style plain"

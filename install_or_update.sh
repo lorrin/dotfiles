@@ -115,3 +115,17 @@ if type tmux >/dev/null; then
 else
     section "tmux not installed; skipping Tmux Plugin update"
 fi
+
+section "checking for required tools"
+if ! type delta  > /dev/null; then
+    warning delta not installed, git diffs will not work properly
+fi
+
+section "checking for optional tools"
+for OPTIONAL in bat duf dust fd rg exa; do
+    if type $OPTIONAL  > /dev/null; then
+        notice $OPTIONAL found
+    else
+        notice $OPTIONAL not installed
+    fi
+done;
