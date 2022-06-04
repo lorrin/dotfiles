@@ -36,17 +36,16 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'macports' \
+  'git' \
   'completion' \
   'fasd' \
   'tmux' \
   'archive' \
-  'git' \
-  'archive' \
-  'docker' \
   'syntax-highlighting' \
   'history-substring-search' \
   'prompt' \
-  'node'
+  'clipboard' \
+
 #
 # Autosuggestions
 #
