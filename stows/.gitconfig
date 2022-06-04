@@ -7,20 +7,11 @@
 
 [core]
 	editor = vim
-
-[pager]
-    # diff-so-fancy from https://github.com/so-fancy/diff-so-fancy
-    #diff = diff-so-fancy | less --tabs=4 -RFX
-    #show = diff-so-fancy | less --tabs=4 -RFX
-    
-    # delta from https://github.com/dandavison/delta#installation
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+    # delta from https://github.com/dandavison/delta
+    pager = delta
 
 [interactive]
-    # delta from https://github.com/dandavison/delta#installation
+    # delta from https://github.com/dandavison/delta
     diffFilter = delta --color-only
 
 [delta]
@@ -53,9 +44,16 @@
     minus-style = syntax "#400000"
     plus-emph-style = syntax bold "#007800"
     plus-style = syntax "#004000"
-    syntax-theme = Vibrant Sunburst
+    # syntax-theme = Vibrant Sunburst
+    syntax-theme = Nord
     whitespace-error-style = "#280050" reverse
     zero-style = syntax
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
 
 [commit]
 	gpgsign = true
