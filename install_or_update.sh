@@ -35,7 +35,6 @@ DOTFILES_DIR=${0:a:h}
 if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 	section Installing Prezto
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-	setopt EXTENDED_GLOB
 else
 	section Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
@@ -62,6 +61,18 @@ done
 # Remove stock .zshrc and .zpreztorc to enable stowing of custom one below.
 rm "${ZDOTDIR:-$HOME}/.zshrc"
 rm "${ZDOTDIR:-$HOME}/.zpreztorc"
+
+# Install Prezto-Contrib per https://github.com/belak/prezto-contrib
+if [ ! -d "${ZPREZTODIR:-$HOME/.zprezto}/contrib" ]; then
+	section Installing Prezto-Contrib
+	git clone --recurse-submodules https://github.com/belak/prezto-contrib contrib
+else
+	section Updating Prezto-Contrib
+    cd "${ZPREZTODIR:-$HOME/.zprezto}/contrib"
+	git pull --ff-only
+	git submodule sync
+	git submodule update --init --recursive
+fi
 
 if [ ! -d "$HOME/.vim_runtime" ]; then
 	section Installing Ultimate vimrc
@@ -107,13 +118,13 @@ else
 	notice "No local overrides found ($DOTFILES_DIR/local_$(hostname -s))"
 fi
 
-if type tmux >/dev/null; then
+if type tmux >/dev/null && tmux server-info 2>/dev/null; then
     section Updating Tmux Plugins
     tmux source ~/.tmux.conf
     ~/.tmux/plugins/tpm/bin/install_plugins
     ~/.tmux/plugins/tpm/bin/update_plugins all
 else
-    section "tmux not installed; skipping Tmux Plugin update"
+    section "tmux not installed or not running; skipping Tmux Plugin update"
 fi
 
 section "checking for required tools"
