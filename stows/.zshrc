@@ -46,15 +46,17 @@ bindkey '^E' end-of-line
 # Prefer MacPorts installed GNU toolchain over BSD if present
 [[ -d /opt/local/libexec/gnubin ]] && export PATH=/opt/local/libexec/gnubin:$PATH
 
-# Set JAVA_HOME on OS X
+# Set JAVA_HOME on macOS
 if [ -e /usr/libexec/java_home ]; then
     # Do nothing if no Java JVMs are installed
     if /usr/libexec/java_home --failfast > /dev/null; then
         function setjdk {
-           local ver=${1?Usage: setjdk <version>}
-           export JAVA_HOME=$(/usr/libexec/java_home -v $ver)
-           PATH=$(echo $PATH | tr ':' '\n' | grep -v Java | tr '\n' ':')
-           export PATH=$JAVA_HOME/bin:$PATH
+           local ver=${1:?Usage: setjdk <version> [architecture]}
+           local arch=${2:-$(uname -m)}
+           export JAVA_HOME="$(/usr/libexec/java_home --failfast --version $ver -V 2>&1 | grep "($arch)" | awk '{print $(NF)}')"
+           if [ -n "$JAVA_HOME" ]; then
+               export PATH="${JAVA_HOME}/bin:$(echo $PATH | tr ':' '\n' | grep -v Java | sed -e '/^$/d' | tr '\n' ':' | sed -e 's/:$//')"
+           fi
         }
         setjdk 11
     fi
