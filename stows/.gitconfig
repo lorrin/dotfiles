@@ -1,12 +1,12 @@
 [push]
-	default = current
+    default = current
 
 [user]
-	name = Lorrin Nelson
-	email = lorrin@lorrin.org
+    name = Lorrin Nelson
+    email = lorrin@lorrin.org
 
 [core]
-	editor = vim
+    editor = vim
     # delta from https://github.com/dandavison/delta
     pager = delta
 
@@ -56,4 +56,4 @@
     colorMoved = default
 
 [commit]
-	gpgsign = true
+    gpgsign = true
