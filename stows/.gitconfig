@@ -57,3 +57,6 @@
 
 [commit]
     gpgsign = true
+
+[add "interactive"]
+    useBuiltin = false
