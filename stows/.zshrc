@@ -199,3 +199,8 @@ if type pgcli > /dev/null; then
     alias psql=pgcli
 fi
 
+# viddy alternative to watch that does diff highlighting, change tracking
+if type viddy > /dev/null; then
+    alias watch=viddy
+fi
+

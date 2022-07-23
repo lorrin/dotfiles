@@ -133,7 +133,7 @@ if ! type delta  > /dev/null; then
 fi
 
 section "checking for optional tools"
-for OPTIONAL in bat duf dust fd rg exa; do
+for OPTIONAL in bat duf dust fd rg exa viddy; do
     if type $OPTIONAL  > /dev/null; then
         notice $OPTIONAL found
     else
