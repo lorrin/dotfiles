@@ -38,9 +38,18 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
 else
 	section Updating Prezto
 	cd "${ZDOTDIR:-$HOME}/.zprezto"
+
+    # Work-around for Poetry installer dropping a completion into this repo
+    # (Will need to remove this if these are ever added to https://github.com/zsh-users/zsh-completions/tree/master/src)
+    find . -name '_poetry' -delete
+
 	git pull --ff-only
 	git submodule sync
 	git submodule update --init --recursive
+
+    if which poetry > /dev/null; then
+        poetry completions zsh > modules/completion/external/src/_poetry
+    fi
 fi
 section Linking Zsh RC files
 setopt EXTENDED_GLOB
