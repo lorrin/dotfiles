@@ -125,14 +125,14 @@ if which python3 > /dev/null; then
             if [ -e "${P}/virtualenvwrapper.sh" ]; then
                 export WORKON_HOME=$HOME/.virtualenvs
                 mkdir -p $WORKON_HOME
-                source "${P}/virtualenvwrapper.sh"
+                source "${P}/virtualenvwrapper.sh"  2>&1 | grep -v 'egrep is obsolescent'
                 break
             fi
         done
         if which virtualenvwrapper.sh > /dev/null; then
             export WORKON_HOME=$HOME/.virtualenvs
             mkdir -p $WORKON_HOME
-            source "$(which virtualenvwrapper.sh)"
+            source "$(which virtualenvwrapper.sh)" 2>&1 | grep -v 'egrep is obsolescent'
         fi
     fi
 fi
