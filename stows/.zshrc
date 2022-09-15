@@ -87,7 +87,7 @@ function gbum(){
 function gbom(){
     git checkout -b $1 origin/master
 }
-alias git-branch-clean="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
+alias git-branch-clean="git branch --merged | grep -vE '^\* ' | xargs -r git branch -d"
 # git branch delete merged
 alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git fetch (all)
