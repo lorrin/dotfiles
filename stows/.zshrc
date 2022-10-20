@@ -120,19 +120,20 @@ if which python3 > /dev/null; then
     # This is even more bogus if a virtualenv is already active and .zshrc is re-sourced.
     export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 
-    if python3 -m pip 2> /dev/null > /dev/null && python3 -m pip list | grep -E '^virtualenv\s' > /dev/null; then
+    if python3 -m pip 2>&1 > /dev/null && python3 -m pip list | grep -E '^virtualenv\s' > /dev/null; then
         for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS"; do
             if [ -e "${P}/virtualenvwrapper.sh" ]; then
                 export WORKON_HOME=$HOME/.virtualenvs
                 mkdir -p $WORKON_HOME
-                source "${P}/virtualenvwrapper.sh"  2>&1 | grep -v 'egrep is obsolescent'
+                source "${P}/virtualenvwrapper.sh"
                 break
             fi
         done
-        if which virtualenvwrapper.sh > /dev/null; then
+        if which virtualenvwrapper.sh > /dev/null && ! which mkvirtualenv > /dev/null; then
+            echo not found use $(which virtualenvwrapper.sh)
             export WORKON_HOME=$HOME/.virtualenvs
             mkdir -p $WORKON_HOME
-            source "$(which virtualenvwrapper.sh)" 2>&1 | grep -v 'egrep is obsolescent'
+            source "$(which virtualenvwrapper.sh)"
         fi
     fi
 fi
