@@ -125,7 +125,8 @@ if which python3 > /dev/null; then
             if [ -e "${P}/virtualenvwrapper.sh" ]; then
                 export WORKON_HOME=$HOME/.virtualenvs
                 mkdir -p $WORKON_HOME
-                source "${P}/virtualenvwrapper.sh"
+                # Work around GNU grep now issuing warnings when egrep is invoked. https://lists.gnu.org/archive/html/info-gnu/2022-09/msg00001.html
+                source <(< "${P}/virtualenvwrapper.sh" sed -e 's/egrep/grep -E/')
                 break
             fi
         done
@@ -133,7 +134,7 @@ if which python3 > /dev/null; then
             echo not found use $(which virtualenvwrapper.sh)
             export WORKON_HOME=$HOME/.virtualenvs
             mkdir -p $WORKON_HOME
-            source "$(which virtualenvwrapper.sh)"
+            source <(< "$(which virtualenvwrapper.sh)" sed -e 's/egrep/grep -E/')
         fi
     fi
 fi
