@@ -78,6 +78,7 @@ fi
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 # git log all
 alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
 # More git aliases
 # git branch upstream master
 function gbum(){
@@ -93,6 +94,8 @@ alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git fetch (all)
 alias gfa="git fetch --all --prune"
 alias gf="git fetch --prune"
+# git commit in progress
+alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
 
 
 # GPG_TTY for git code signing
