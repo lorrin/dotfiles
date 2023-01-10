@@ -1,3 +1,4 @@
+export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 function dgapp-dev() {
     cd ~/dg/dgapp
