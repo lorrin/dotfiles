@@ -1,6 +1,8 @@
 set editing-mode vi
 
 set keymap vi-command
+# Caution: these make these keys not work in Ruby irb/pry
+# https://www.reddit.com/r/ruby/comments/am1ir3/cannot_type_b_in_pryirb/
 "?":non-incremental-forward-search-history
 "/":non-incremental-reverse-search-history
 

@@ -228,3 +228,4 @@ if type viddy > /dev/null; then
     alias watch=viddy
 fi
 
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

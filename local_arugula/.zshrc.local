@@ -9,3 +9,5 @@ function dgapp-dev() {
     ttab 'title psql && cd ~/dg/dgapp && wait-port 5432 && psql'
     ttab 'title terraform && cd ~/dg/dgapp/terraform/environments/production'
 }
+
+alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"

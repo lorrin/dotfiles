@@ -60,3 +60,6 @@
 
 [add "interactive"]
     useBuiltin = false
+
+[includeIf "gitdir:~/dg/"]
+    path = ~/dg/.gitconfig
