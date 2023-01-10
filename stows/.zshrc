@@ -230,3 +230,7 @@ if type viddy > /dev/null; then
 fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+function wifi_check() {
+    echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq ".\"$(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep BSSID | awk '{print $2}'| tr "[:lower:]" "[:upper:]")\" + \" @ $(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep lastTxRate | awk '{print $2}') Mbps\""
+}
