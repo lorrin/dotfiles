@@ -175,6 +175,16 @@ if setxkbmap_path="$(type -p setxkbmap)" && [[ ! -z $setxkbmap_path  ]]; then
     setxkbmap -option caps:escape
 fi
 
+# Wait for TCP port to be open. https://stackoverflow.com/a/70975182
+function wait-port {
+    for _ in $(seq 1 40); do
+        nc -z localhost $1 2>/dev/null && return
+        sleep 0.25
+    done;
+    echo "⌛ Timeout awaiting port $1" >&2
+    return 1
+}
+
 # Source machine-specific .zshrc
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
@@ -191,6 +201,13 @@ function title {
         # For use without tmux; see https://superuser.com/a/599156
         echo -ne "\033]0;"$*"\007"
     fi
+}
+
+# Open a new iTerm tab. https://apple.stackexchange.com/a/360827
+function ttab {
+  osascript \
+    -e 'tell application "iTerm2" to tell current window to set newWindow to (create tab with default profile)'\
+    -e "tell application \"iTerm2\" to tell current session of newWindow to write text \"$*\""
 }
 
 # https://gitlab.com/gnachman/iterm2/-/wikis/tmux-Integration-Best-Practices#how-do-i-use-shell-integration
