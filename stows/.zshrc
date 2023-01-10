@@ -163,6 +163,7 @@ fi
 
 # bat is a cat(1) clone with syntax highlighting and Git integration.
 if type bat > /dev/null; then
+    export BAT_THEME='Solarized (dark)'
     alias cat='bat'
     export PAGER="`which bat` --style plain"
 fi
