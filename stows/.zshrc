@@ -34,6 +34,10 @@ unsetopt SHARE_HISTORY
 # )%F{magenta}%n%f@%F{yellow}%m%f|%F{green}${_prompt_giddie_pwd}%f${vcs_info_msg_0_}
 # %F{blue}$%f '
 
+# The root-user highlighter (using "standout") is hard to read. Change to bold
+# https://github.com/sorin-ionescu/prezto/issues/1773
+export ZSH_HIGHLIGHT_STYLES[root]='bold'
+
 export EDITOR=vim
 
 # Allow ctrl-r / ctrl-f to cycle through history matches.
