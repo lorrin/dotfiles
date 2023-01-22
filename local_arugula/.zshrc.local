@@ -11,4 +11,5 @@ function dgapp-dev() {
     ttab 'title terraform && cd ~/dg/dgapp/terraform/environments/production'
 }
 
-alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
+alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
+alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
