@@ -30,3 +30,7 @@
 1. Create new directory `~/dotfiles/local_$(hostname -s)`
 1. Add dot-files into directory
 1. `./install_or_update.sh`
+
+# iTerm2 Configuration
+Under **Preferences -> General**, enabled **Load preferences from a custom folder or URL**, select
+**~/dotfiles/iterm2**, and set to Save changes automatically.
