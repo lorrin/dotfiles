@@ -1,19 +1,17 @@
 # Installation
 
-1. Install zsh, git, vim, stow.
-    - vim on Linux: use vim-nox or vim-gnome.
-    - vim on Mac OS X: use sudo port install vim
-    - zsh on Mac OS X: use older stock zsh or sudo port install zsh
-1. Install the Python requests module
+1. Install zsh, git, vim, stow, git-delta.
+    - vim on Linux: use `vim-nox` or `vim-gnome`, [get git-delta here](https://github.com/dandavison/delta/releases)
+    - git, vim and zsh on macOS: stock versions are relatively current. Alternatively `sudo port install` or `brew install`
+        them.
 1. Change default shell to zsh
     - Linux: `chsh -s /usr/bin/zsh`
-    - Mac OS X with MacPorts zsh: `sudo chsh -s /opt/local/bin/zsh <user>`
-    - Mac OS X with stock zsh: `chsh -s /bin/zsh`
+    - macOS with MacPorts or Homebrew zsh: `sudo chsh -s /opt/local/bin/zsh <user>`
 1. Clone dotfiles repo:
     - `cd ~`
     - for read-only use: `git clone https://github.com/lorrin/dotfiles.git`
     - for read-write use:
-        - install GitHub SSH keys
+        - install GitHub SSH keys or [enable 1Password SSH agent](https://developer.1password.com/docs/ssh/get-started#step-3-turn-on-the-1password-ssh-agent)
         - `~/.ssh/config` contains:
            ```
             Host github.com
