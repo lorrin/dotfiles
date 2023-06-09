@@ -256,6 +256,18 @@ if [[ "$OS" == "darwin" ]]; then
         echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq ".\"$(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep BSSID | awk '{print $2}'| tr "[:lower:]" "[:upper:]")\" + \" @ $(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep lastTxRate | awk '{print $2}') Mbps\""
     }
 
+    # grep for listening processes
+    # https://stackoverflow.com/a/30029855
+    listening() {
+        if [ $# -eq 0 ]; then
+            sudo lsof -iTCP -sTCP:LISTEN -n -P
+        elif [ $# -eq 1 ]; then
+            sudo lsof -iTCP -sTCP:LISTEN -n -P | grep -i --color $1
+        else
+            echo "Usage: listening [pattern]"
+        fi
+    }
+
     # Convert macOS Quicktime .mov to animated GIF (https://gist.github.com/baumandm/1dba6a055356d183bbf7)
     # Dropbox Paper makes static preview for images that are 8.9 MB. 7.3 MB gets actual image (and hence animation)
     function movtogif () {
