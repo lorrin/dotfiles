@@ -44,6 +44,3 @@
 
 [include]
     path = .gitconfig.local
-
-[includeIf "gitdir:~/dg/"]
-    path = ~/dg/.gitconfig

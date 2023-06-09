@@ -1,0 +1,11 @@
+[user]
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPTCHNvdaiPbMjRC/r72V9QwM647uQhfusBKfJHG4gaJ
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[includeIf "gitdir:~/dg/"]
+    path = ~/dg/.gitconfig
