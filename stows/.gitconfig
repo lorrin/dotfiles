@@ -1,5 +1,14 @@
 [push]
-    default = current
+    # Use upstream instead of simple so that local branches can be renamed and
+    # still push to their upstream even though the names are no longer the same.
+    default = upstream
+    autoSetupRemote = true
+
+[branch]
+    # stop `git checkout -b my_branch origin/main` from setting origin/main as
+    # the remote tracking branch. Instead, only set it up when the names match.
+    # When it is left unset, autoSetupRemote will assume same-name.
+    autoSetupMerge = simple
 
 [user]
     name = Lorrin Nelson
