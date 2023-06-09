@@ -100,6 +100,20 @@ alias gfa="git fetch --all --prune"
 alias gf="git fetch --prune"
 # git commit in progress
 alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
+# git branch
+alias gb="git --no-pager branch -vv"
+
+# https://stackoverflow.com/a/21302474
+git-rename-remote-branch() {
+  if [ $# -ne 3 ]; then
+    echo "Rationale : Rename a branch on the server without checking it out."
+    echo "Usage     : ${FUNCNAME[0]} <remote> <old name> <new name>"
+    echo "Example   : ${FUNCNAME[0]} origin master release"
+    return 1
+  fi
+
+  git push $1 $1/$2\:refs/heads/$3 :$2
+}
 
 
 # GPG_TTY for git code signing
