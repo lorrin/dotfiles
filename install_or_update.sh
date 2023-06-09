@@ -110,7 +110,7 @@ if which tmux >/dev/null; then
             git pull --ff-only
     fi
 else
-    section tmux not installed; skipping Tmux Plugin Manager
+    section "tmux not installed; skipping Tmux Plugin Manager"
 fi
 
 # Make a symlink in $HOME to each of the .dotfiles in stows/
@@ -142,6 +142,14 @@ if ! type delta  > /dev/null; then
 fi
 
 section "checking for optional tools"
+# https://github.com/sharkdp/bat (enhanced cat)
+# https://github.com/muesli/duf (disk usage/free space report)
+# https://github.com/bootandy/dust (enhanced du)
+# https://github.com/sharkdp/fd (enhanced find)
+# https://github.com/BurntSushi/ripgrep (ripgrep recursive grep)
+# https://the.exa.website/ (enhanced ls)
+# https://github.com/BurntSushi/ripgrep (enhanced watch)
+# .zshrc makes bat, exa, and viddy the defaults
 for OPTIONAL in bat duf dust fd rg exa viddy; do
     if type $OPTIONAL  > /dev/null; then
         notice $OPTIONAL found
