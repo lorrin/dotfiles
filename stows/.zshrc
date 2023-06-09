@@ -53,7 +53,7 @@ bindkey '^E' end-of-line
 # Set JAVA_HOME on macOS
 if [ -e /usr/libexec/java_home ]; then
     # Do nothing if no Java JVMs are installed
-    if /usr/libexec/java_home --failfast > /dev/null; then
+    if /usr/libexec/java_home --failfast > /dev/null 2>&1; then
         function setjdk {
            local ver=${1:?Usage: setjdk <version> [architecture]}
            local arch=${2:-$(uname -m)}
