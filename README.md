@@ -19,6 +19,7 @@
             ```
         - `git clone git@github.com:lorrin/dotfiles.git`
 1. `dotfiles/install_or_update.sh`
+1. `p10k configure`
 
 # Getting Updates
 1. `cd ~/dotfiles`
