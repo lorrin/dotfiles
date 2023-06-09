@@ -141,7 +141,7 @@ if which python3 > /dev/null; then
     # This is even more bogus if a virtualenv is already active and .zshrc is re-sourced.
     export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 
-    if python3 -m pip 2>&1 > /dev/null && python3 -m pip list | grep -E '^virtualenv\s' > /dev/null; then
+    if python3 -m pip 2>&1 > /dev/null && python3 -m pip --disable-pip-version-check list | grep -E '^virtualenv\s' > /dev/null; then
         for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS"; do
             if [ -e "${P}/virtualenvwrapper.sh" ]; then
                 export WORKON_HOME=$HOME/.virtualenvs
