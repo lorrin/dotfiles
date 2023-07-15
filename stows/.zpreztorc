@@ -36,10 +36,13 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'macports' \
+  'homebrew' \
   'git' \
   'completion' \
   'fasd' \
   'tmux' \
+  'ruby' \
+  'node' \
   'archive' \
   'syntax-highlighting' \
   'history-substring-search' \
