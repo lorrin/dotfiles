@@ -1,0 +1,3 @@
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview instead of only a truncation message.
+--max-columns=500
+--max-columns-preview

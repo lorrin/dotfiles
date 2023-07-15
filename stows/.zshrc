@@ -249,6 +249,8 @@ fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
 # OS-specific
 OS=$(uname -o | tr '[:upper:]' '[:lower:]')
 if [[ "$OS" == "darwin" ]]; then
