@@ -1,5 +1,8 @@
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
+alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
+alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
+
 function dgapp-dev() {
     cd ~/dg/dgapp
     ttab 'title rails && cd ~/dg/dgapp && console'
@@ -14,14 +17,11 @@ function dgapp-dev() {
 
 function dg-admin-dev() {
     cd ~/dg/dgapp
-    ttab 'title rails && cd ~/dg/dg-admin && rails c'
+    ttab 'title rails && cd ~/dg/dg-admin && console'
     ttab 'title server && cd ~/dg/dg-admin && wait-port 5432 && rails s'
     ttab 'title production && cd ~/dg/dg-admin'
     ttab 'title staging && cd ~/dg/dg-admin'
 }
-
-alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
-alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
 
 function release-notes() {
     # https://stackoverflow.com/a/14203146
