@@ -75,7 +75,6 @@ function release-notes() {
             else
                 git --no-pager log $PAIR --pretty=format:"%h⇥%an⇥%s" | sed 's/$/\n/' | column -t -s'⇥'
             fi
-            echo
             echo '```'
         else
             echo -ne '\033[1;36m'
