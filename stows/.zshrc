@@ -99,7 +99,7 @@ alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 alias gfa="git fetch --all --prune"
 alias gf="git fetch --prune"
 # git commit in progress
-alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
+alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l | xargs) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
 # git branch
 alias gb="git --no-pager branch -vv"
 
