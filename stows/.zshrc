@@ -260,7 +260,7 @@ if [[ "$OS" == "darwin" ]]; then
 
     # grep for listening processes
     # https://stackoverflow.com/a/30029855
-    listening() {
+    portgrep() {
         if [ $# -eq 0 ]; then
             sudo lsof -iTCP -sTCP:LISTEN -n -P
         elif [ $# -eq 1 ]; then
@@ -268,6 +268,12 @@ if [[ "$OS" == "darwin" ]]; then
         else
             echo "Usage: listening [pattern]"
         fi
+    }
+
+    portkill() {
+        # Extract PID from: ruby      38103 lorrin   12u  IPv4 0x4f0bb1f421af2e1b      0t0  TCP *:3000 (LISTEN)
+        PIDS=$(portgrep $1 | awk '{print $2}' | tr '\n' ' ')
+        sudo kill $PIDS
     }
 
     # Convert macOS Quicktime .mov to animated GIF (https://gist.github.com/baumandm/1dba6a055356d183bbf7)
