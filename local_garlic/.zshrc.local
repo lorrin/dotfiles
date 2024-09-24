@@ -5,14 +5,33 @@ alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rail
 
 function dgapp-dev() {
     cd ~/dg/dgapp
-    ttab 'title rails && cd ~/dg/dgapp && console'
-    ttab 'title foreman && cd ~/dg/dgapp && wait-port 5432 && foreman start -m all=1,storybook=0,frontend=0,webpack=0'
+    ttab 'title console && cd ~/dg/dgapp && console'
+    ttab 'title honcho && cd ~/dg/dgapp && wait-port 5432 && aws-login && honcho start sidekiq rails nginx'
     ttab 'title frontend && cd ~/dg/dgapp && yarn dev'
     ttab 'title db && cd ~/dg/dgapp && docker-compose up db redis'
     ttab 'title psql && cd ~/dg/dgapp && wait-port 5432 && psql'
     ttab 'title terraform && cd ~/dg/dgapp/terraform/environments/production'
-    ttab 'title production && cd ~/dg/dgapp'
-    ttab 'title staging && cd ~/dg/dgapp'
+}
+
+function resolve-realm() {
+    case $1 in
+        prod*)
+            echo -n production;;
+        stag*)
+            echo -n staging;;
+        salesforce|salesforce-prod*|sf|sf-prod*|sales|sales-prod*)
+            echo -n salesforce;;
+        salesforce-stag*|sf-stag*|staging-sf|staging-sales*|sales-stag*)
+            echo -n salesforce-staging;;
+        *)
+            echo $1
+    esac
+}
+
+function dgssh-tab() {
+    REALM=$(resolve-realm $1)
+    shift
+    ttab "title $REALM && cd ~/dg/dgapp && ./dgssh ${REALM}-dgapp $@"
 }
 
 function dg-admin-dev() {
@@ -23,11 +42,17 @@ function dg-admin-dev() {
     ttab 'title staging && cd ~/dg/dg-admin'
 }
 
+function dg-agent-dev() {
+    cd ~/dg/datagrail-agent
+    ttab 'title docker && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml up'
+}
+
 function release-notes() {
     # https://stackoverflow.com/a/14203146
     POSITIONAL_ARGS=()
     MARKDOWN="false"
     MINE="false"
+    TITLES="false"
     STAGING="false"
 
     while [[ $# -gt 0 ]]; do
