@@ -13,6 +13,7 @@
 [user]
     name = Lorrin Nelson
     email = lorrin@lorrin.org
+	signingkey = 585BBA5173A7FE2B
 
 [core]
     editor = vim
