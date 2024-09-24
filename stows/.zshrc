@@ -47,6 +47,8 @@ bindkey -M viins '^F' history-incremental-pattern-search-forward
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
 
+# Prefer Homebrew installed GNU toolchain over BSD if present
+[[ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin ]] && export PATH=/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH
 # Prefer MacPorts installed GNU toolchain over BSD if present
 [[ -d /opt/local/libexec/gnubin ]] && export PATH=/opt/local/libexec/gnubin:$PATH
 
