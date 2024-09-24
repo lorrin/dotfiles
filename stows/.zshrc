@@ -84,17 +84,31 @@ fi
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 # git log all
 alias gla="git log --all --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+# git log mine
+alias glm="git branch | grep $USER | sed -e 's/[ *]*//' | paste -s -d ' ' - | xargs git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit HEAD"
+
+# Git origin/main|master -- figure out if origin uses main or master
+function gom(){
+    echo -n $(git branch --remote --list "origin/main"; git branch --remote --list "origin/master") | head -n1
+}
 
 # More git aliases
-# git branch upstream master
-function gbum(){
-    git checkout -b $1 upstream/master
-}
-# git branch origin master
+# git branch origin main
 function gbom(){
-    git checkout -b $1 origin/master
+    git checkout -b $1 $(gom)
 }
-alias git-branch-clean="git branch --merged | grep -vE '^\* ' | xargs -r git branch -d"
+
+# Gall's where-the-fork git_wft_* aliases. Diff against where branch split from main.
+alias gwtf='git merge-base $(gom) HEAD' # where-the-fork
+alias gwtfd='git diff `gwtf`' #where-the-fork diff
+alias gwtff='git diff `gwtf` --name-only' # where-the-fork [changed] files
+
+# Safe incarnation, equivalent to gbxm below:
+# alias git-branch-clean="git branch --merged | grep -vE '^\* ' | xargs -r git branch -d"
+# Dangerous incarnation to work with the horrid GitHub squash merge feature. Assume branches whose upstream is gone are
+# OK to delete. "git branch gone" and "git branch delete gone"
+alias gbg="gb | grep '\[origin/.*: gone\]'"
+alias gbxg="gbg | grep -v '^*' | awk '{print \$1}' | xargs -r git branch -D"
 # git branch delete merged
 alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git fetch (all)
