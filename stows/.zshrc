@@ -305,3 +305,5 @@ if [[ "$OS" == "darwin" ]]; then
       rm $tempfile "${1%.mov}-resized.mov"
     }
 fi
+
+alias neofetch=fastfetch
