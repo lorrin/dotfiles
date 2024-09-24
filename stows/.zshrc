@@ -232,9 +232,9 @@ function ttab {
 # https://gitlab.com/gnachman/iterm2/-/wikis/tmux-Integration-Best-Practices#how-do-i-use-shell-integration
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 
-# Exa alternative to ls. Note that it is not a drop-in replacement. https://the.exa.website/
-if type exa > /dev/null; then
-    alias ls='exa --all --long --classify --header --group --git --icons --color-scale'
+# Eza alternative to ls. Note that it is not a drop-in replacement. https://eza.rocks/
+if type eza > /dev/null; then
+    alias ls='eza --all --long --classify --header --group --git --icons --color-scale'
 fi
 
 # pgcli is a postgres client that does auto-completion and syntax highlighting
