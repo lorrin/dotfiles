@@ -69,10 +69,14 @@ function release-notes() {
             STAGING="true"
             shift
             ;;
+        --titles-only)
+            TITLES="true"
+            shift
+            ;;
         *)
-          POSITIONAL_ARGS+=("$1") # save positional arg
-          shift # past argument
-          ;;
+            POSITIONAL_ARGS+=("$1") # save positional arg
+            shift # past argument
+            ;;
       esac
     done
     set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
@@ -94,6 +98,9 @@ function release-notes() {
     paste -d, <(echo $TAGS | sed -e '1d') <(echo $TAGS | sed -e '$d') | sed -e 's/,/../' | while read PAIR; do
         if [[ "$MARKDOWN" == "true" ]]; then
             echo $PAIR | sed -e "s/.*${TAG_PATTERN}/### ${TITLE} /"
+            if [[ "$TITLES" == "true" ]]; then
+                continue
+            fi
             echo '```'
             if [[ "$MINE" == "true" ]]; then
                 git --no-pager log $PAIR --pretty=format:"%h⇥%an⇥%s" | grep "⇥$(git config --get user.name)⇥" | sed 's/$/\n/' | column -t -s'⇥'
@@ -105,6 +112,9 @@ function release-notes() {
             echo -ne '\033[1;36m'
             echo $PAIR | sed -e "s/.*${TAG_PATTERN}/${TITLE} /"
             echo -ne '\033[0m'
+            if [[ "$TITLES" == "true" ]]; then
+                continue
+            fi
             if [[ "$MINE" == "true" ]]; then
                 git --no-pager log $PAIR --graph --decorate-refs-exclude="tags/master-*" --decorate-refs-exclude="tags/staging-*" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit | grep "<$(git config --get user.name)>"
             else
