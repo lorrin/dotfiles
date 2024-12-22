@@ -283,7 +283,19 @@ if [[ "$OS" == "darwin" ]]; then
                 STATION=$(echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq -r .\"$BSSID\")
                 # use xargs to trim whitespace
                 SPEED=$(sudo wdutil info | grep 'Tx Rate' | cut -d: -f2 | xargs)
-                echo "$STATION @ $SPEED"
+                # https://www.lifewire.com/wireless-standards-802-11a-802-11b-g-n-and-802-11ac-816553
+                declare -A MODES
+                MODES=( \
+                    [11b]="Wi-Fi 1 (b; max 11Mbps)" \
+                    [11a]="Wi-Fi 2 (a; max 11Mbps)" \
+                    [11g]="Wi-Fi 3 (g; max 54Mbps)" \
+                    [11n]="Wi-Fi 4 (n; max 600Mbps)" \
+                    [11ac]="Wi-Fi 5 (ac; max 1300Mbps)" \
+                    [11ax]="Wi-Fi 6 (ax; max 10Gbps)" \
+                    [11be]="Wi-Fi 7 (be; max 46Gbps)" \
+                )
+                MODE=$(sudo wdutil info | grep PHY | cut -d: -f2 | xargs)
+                echo "$STATION via ${MODES[$MODE]:-$MODE} @ $SPEED"
             else
                 echo "Error accessing BSSID ('$ERROR'). Ensure Location Services enabled for wifi-unredactor."
             fi
