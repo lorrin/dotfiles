@@ -45,3 +45,11 @@
 
 [include]
     path = .gitconfig.local
+
+[rebase]
+    # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
+    updateRefs = true
+
+[rerere]
+    # https://git-scm.com/docs/git-rerere
+	enabled = true

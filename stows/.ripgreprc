@@ -1,3 +1,14 @@
 # Don't let ripgrep vomit really long lines to my terminal, and show a preview instead of only a truncation message.
 --max-columns=500
 --max-columns-preview
+
+# Search hidden files / directories (e.g. dotfiles) by default
+--hidden
+
+# Using glob patterns to include/exclude files or folders
+--glob=!.git/*
+
+# How to use types: rg -t ruby
+# Default ruby: *.gemspec, *.rb, *.rbw, .irbrc, Gemfile, Rakefile, config.ru
+--type-add
+ruby: *.gemspec, *.rb, *.rbw, .irbrc, Gemfile, Rakefile, config.ru, *.rake
