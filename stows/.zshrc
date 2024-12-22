@@ -254,8 +254,27 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 # OS-specific
 OS=$(uname -o | tr '[:upper:]' '[:lower:]')
 if [[ "$OS" == "darwin" ]]; then
+
+    # Note: as of MacOS 15, base station SSID is redacted unless an app has access to Location Services.
+    # However, you can only grant Location Services access to GUI apps. https://github.com/noperator/wifi-unredactor
+    # is a tool to get permission granted and then wrap wdutil.
     function wifi_check() {
-        echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq ".\"$(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep BSSID | awk '{print $2}'| tr "[:lower:]" "[:upper:]")\" + \" @ $(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep lastTxRate | awk '{print $2}') Mbps\""
+        if [ -f ~/Applications/wifi-unredactor.app/Contents/MacOS/wifi-unredactor ]; then
+            WIFI=$(~/Applications/wifi-unredactor.app/Contents/MacOS/wifi-unredactor)
+            ERROR=$(echo $WIFI | jq -r .error)
+            if [[ "$ERROR" == null ]]; then
+                BSSID=$(echo $WIFI | jq -r .bssid | tr '[:lower:]' '[:upper:]')
+                STATION=$(echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq -r .\"$BSSID\")
+                # use xargs to trim whitespace
+                SPEED=$(sudo wdutil info | grep 'Tx Rate' | cut -d: -f2 | xargs)
+                echo "$STATION @ $SPEED"
+            else
+                echo "Error accessing BSSID ('$ERROR'). Ensure Location Services enabled for wifi-unredactor."
+            fi
+        else
+            echo 'https://github.com/noperator/wifi-unredactor is required to retrieve BSSID'
+        fi
+        #echo '{"C0:25:E9:83:B6:A0": "Basement 5GHz 802.11nac", "C0:25:E9:83:B6:A1": "Basement 2.4GHz 802.11bgn", "78:D2:94:4A:A5:B9": "Media room 5GHz 802.11nac", "78:D2:94:4A:A5:BA": "Media room 2.4GHz 802.11bgn", "B0:BE:76:77:46:52": "Attic 5GHz 802.11nac", "B0:BE:76:77:46:53": "Attic 2.4GHz 802.11bgn"}' | jq ".\"$(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep BSSID | awk '{print $2}'| tr "[:lower:]" "[:upper:]")\" + \" @ $(sudo /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I | grep lastTxRate | awk '{print $2}') Mbps\""
     }
 
     # grep for listening processes
