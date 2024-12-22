@@ -337,4 +337,6 @@ if [[ "$OS" == "darwin" ]]; then
     }
 fi
 
-alias neofetch=fastfetch
+if type fastfetch > /dev/null; then
+    alias neofetch=fastfetch
+fi
