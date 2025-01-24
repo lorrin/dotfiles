@@ -130,6 +130,7 @@ function release-notes() {
     done
 }
 
+# Delete this? Given a PR number, it renames a lorrin/TICKET_desc branch to /pr/NUMBER/desc
 function branch-pr() {
     if [[ $# -ne 1 ]]; then
         echo "Pull-request ID required"
@@ -149,18 +150,25 @@ function branch-pr() {
     git branch -vv -l $NEW_NAME
 }
 
+alias kill-rubocop='pkill -f rubocop; spring stop; pkill spring; rm -rf ~/.cache/rubocop_cache'
+
 function update() {
+    aws-login && \
+    kill-rubocop && \
+    brew upgrade ruby-build && \
     rbenv install --skip-existing && \
     bundle install && \
     gem install yard && \
-    gem install foreman && \
+    yarn install && \
     RAILS_ENV=development bin/rails db:migrate && \
-    RAILS_ENV=development bundle exec rails db:seed:branch_env # superset of db:seed, see db/seeds/README.md
+    RAILS_ENV=development bundle exec rails db:seed && \
+    (openssl x509 -in ../letsencrypt/live/$USER.dg-dev.com/cert.pem -checkend 864000 > /dev/null || scripts/development/generate_dev_certs.sh)
 }
 
 function update-from-main() {
     gfa && \
     git checkout origin/master && \
+    kill-rubocop && \
     update
 }
 
