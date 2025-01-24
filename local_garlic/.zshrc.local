@@ -45,7 +45,7 @@ function dg-admin-dev() {
 
 function dg-agent-dev() {
     cd ~/dg/datagrail-agent
-    ttab 'title docker && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml up'
+    ttab 'title docker && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml build && docker-compose -f rm/docker-compose.yml up'
 }
 
 function release-notes() {
