@@ -9,7 +9,7 @@ function dgapp-dev() {
     ttab 'title console && cd ~/dg/dgapp && console'
     ttab 'title honcho && cd ~/dg/dgapp && wait-port 5432 && aws-login && honcho start sidekiq rails nginx'
     ttab 'title frontend && cd ~/dg/dgapp && yarn dev'
-    ttab 'title db && cd ~/dg/dgapp && docker-compose up db redis'
+    ttab 'title db && cd ~/dg/dgapp && (colima status || colima start) && docker-compose up db redis'
     ttab 'title psql && cd ~/dg/dgapp && wait-port 5432 && psql'
     ttab 'title terraform && cd ~/dg/dgapp/terraform/environments/production'
 }
