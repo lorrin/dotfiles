@@ -142,18 +142,30 @@ if ! type delta  > /dev/null; then
 fi
 
 section "checking for optional tools"
-# https://github.com/sharkdp/bat (enhanced cat)
-# https://github.com/muesli/duf (disk usage/free space report)
-# https://github.com/bootandy/dust (enhanced du)
-# https://github.com/sharkdp/fd (enhanced find)
-# https://github.com/BurntSushi/ripgrep (ripgrep recursive grep)
-# https://the.exa.website/ (enhanced ls)
-# https://github.com/BurntSushi/ripgrep (enhanced watch)
-# .zshrc makes bat, exa, and viddy the defaults
-for OPTIONAL in bat duf dust fd rg exa viddy; do
-    if type $OPTIONAL  > /dev/null; then
-        notice $OPTIONAL found
+declare -A TOOLS
+TOOLS=( \
+    [bat]="Enhanced cat (https://github.com/sharkdp/bat)" \
+    [duf]="Enhanced df disk usage/free space report (https://github.com/muesli/duf)" \
+    [dust]="Enhanced du (https://github.com/bootandy/dust)" \
+    [eza]="Enhanced ls (https://github.com/eza-community/eza)" \
+    [fastfetch]="neofetch replacement (https://github.com/fastfetch-cli/fastfetch)" \
+    [fd]="Enhanced find (https://github.com/sharkdp/fd)" \
+    [fzf]="Fuzzy finder (https://github.com/junegunn/fzf)" \
+    [rg]="Enhanced grep (https://github.com/BurntSushi/ripgrep)" \
+    [viddy]="Enhanced watch (https://github.com/sachaos/viddy)" \
+)
+declare -A DEFAULTS
+DEFAULTS=( [bat]=1 [fastfetch]=1 [eza]=1 [viddy]=1 )
+# Iterate keys and values (https://superuser.com/a/1237504)
+for TOOL DESC in "${(@kv)TOOLS}"; do
+    if type $TOOL  > /dev/null; then
+        if [[ -v DEFAULTS[$TOOL] ]]; then
+            MSG=" and will be aliased as default"
+        else
+            MSG=""
+        fi
+        notice "${TOOL} (${DESC}) found${MSG}"
     else
-        notice $OPTIONAL not installed
+        notice "${TOOL} (${DESC}) not installed"
     fi
-done;
+done
