@@ -257,6 +257,10 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # Eza alternative to ls. Note that it is not a drop-in replacement. https://eza.rocks/
 if type eza > /dev/null; then
     alias ls='eza --all --long --classify --header --group --git --icons --color-scale'
+    # Just file names for use with xargs and such
+    alias lsls='eza -1 --icons=never'
+else
+    alias lsls='ls'
 fi
 
 # pgcli is a postgres client that does auto-completion and syntax highlighting
