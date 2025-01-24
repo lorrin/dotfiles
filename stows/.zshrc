@@ -95,7 +95,7 @@ function gom(){
 # More git aliases
 # git branch origin main
 function gbom(){
-    git checkout -b $1 $(gom)
+    gfa && git checkout -b $1 $(gom)
 }
 
 # Gall's where-the-fork git_wft_* aliases. Diff against where branch split from main.
@@ -118,6 +118,12 @@ alias gf="git fetch --prune"
 alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l | xargs) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
 # git branch
 alias gb="git --no-pager branch -vv"
+
+# git log branch. Only what's happened on my branch and its upstreams
+alias glb='gl "@{u}" $(gwtf)..HEAD'
+
+# git rebase interactive branch. Only rebase since I branched.
+alias grib='git rebase -i $(gwtf)..HEAD'
 
 # https://stackoverflow.com/a/21302474
 git-rename-remote-branch() {

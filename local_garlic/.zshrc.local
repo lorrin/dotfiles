@@ -163,3 +163,8 @@ function update-from-main() {
     git checkout origin/master && \
     update
 }
+
+function branch-from-main() {
+    update-from-main && \
+    git checkout -b $1
+}
