@@ -1,5 +1,6 @@
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
+alias aws-login="if ! aws sts get-caller-identity > /dev/null 2>&1; then aws sso login; fi"
 alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
 alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
 
