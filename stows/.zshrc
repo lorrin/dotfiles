@@ -1,24 +1,22 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# IntelliJ uses interactive terminals to get env vars but doesn't actually
+# want interaction; seems to be bumping to problems with Powerlevel10k's gitstatus:
+#   stdout/stderr: (anon):setopt:7: can't change option: monitor
+#   gitstatus failed to initialize.
+# Fix by omitting Powerlevel10k when INTELLIJ_ENVIRONMENT_READER is set.
+# Also omit Zprezto.
+if [[ -z $INTELLIJ_ENVIRONMENT_READER ]]; then
+    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+    # Initialization code that may require console input (password prompts, [y/n]
+    # confirmations, etc.) must go above this block, everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+      source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
+
+    # Source Prezto.
+    if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+      source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+    fi
 fi
-
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   Lorrin Nelson <https://github.com/lorrin>
-#
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Customize to your needs...
 
 # Turn off SHARE_HISTORY, which jumbles together the history of each
 # open session and works against having task-specific shells in long-
