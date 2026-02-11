@@ -277,7 +277,7 @@ if type viddy > /dev/null; then
     alias watch=viddy
 fi
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
