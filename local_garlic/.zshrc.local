@@ -247,4 +247,9 @@ function migrate-rename() {
     command psql -c "UPDATE schema_migrations SET version = '$NEW_STAMP' WHERE version = '$OLD_STAMP'"
 }
 
+source ~/dg/dg_shell_utils/init.sh
+
+# DataGrail dgapp worktree integration
+source "/Users/lorrin/dg/dgapp/.worktree-shell-integration"
+
 
