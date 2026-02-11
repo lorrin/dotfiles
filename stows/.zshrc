@@ -182,6 +182,10 @@ if which poetry > /dev/null; then
         poetry completions zsh > "$POETRY_COMPLETIONS"
     fi
 fi
+# uv
+if [[ -f ${HOME}/.local/bin/env ]]; then
+    source $HOME/.local/bin/env
+fi
 
 export PATH=$PATH:$HOME/bin
 
