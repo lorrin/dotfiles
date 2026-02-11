@@ -189,16 +189,18 @@ alias kill-rubocop='pkill -f rubocop; spring stop; pkill spring; rm -rf ~/.cache
 alias colima-start='colima start --memory 3 --arch aarch64 --vm-type=vz --vz-rosetta --mount $HOME/dg:$HOME/dg:w'
 
 function update() {
-    aws-login && \
-    kill-rubocop && \
-    brew upgrade ruby-build && \
+    kill-rubocop
+    pkill -9 -f annotaterb
     rbenv install --skip-existing && \
+    brew upgrade ruby-build && \
     bundle install && \
     gem install yard && \
-    yarn install && \
-    RAILS_ENV=development bin/rails db:migrate && \
-    RAILS_ENV=development bundle exec rails db:seed && \
-    (openssl x509 -in ../letsencrypt/live/$USER.dg-dev.com/cert.pem -checkend 864000 > /dev/null || scripts/development/generate_dev_certs.sh)
+    yarn install --immutable && \
+    RAILS_ENV=development rake db:migrate && \
+    # RAILS_ENV=development bundle exec rails db:seed && \ # skip now that we auto-seed from the app
+    (openssl x509 -in ~/dg/dgapp/letsencrypt/live/$USER.dg-dev.com/cert.pem -checkend 864000 > /dev/null || (aws-login && scripts/development/generate_dev_certs.sh))
+    # Using grep to catch the text since openssl exit codes are unreliable in 3.6.0
+    (openssl x509 -in ~/dg/dgapp/letsencrypt/live/$USER.dg-dev.com/cert.pem -noout -checkend 864000 | grep -q "will not expire" || (aws-login && scripts/development/generate_dev_certs.sh))
 }
 
 function update-from-main() {
