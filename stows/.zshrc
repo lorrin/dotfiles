@@ -106,8 +106,8 @@ alias gwtff='git diff `gwtf` --name-only' # where-the-fork [changed] files
 # alias git-branch-clean="git branch --merged | grep -vE '^\* ' | xargs -r git branch -d"
 # Dangerous incarnation to work with the horrid GitHub squash merge feature. Assume branches whose upstream is gone are
 # OK to delete. "git branch gone" and "git branch delete gone"
-alias gbg="gb | grep '\[origin/.*: gone\]'"
-alias gbxg="gbg | grep -v '^*' | awk '{print \$1}' | xargs -r git branch -D"
+alias gbg="git branch -vv | grep '\[origin/.*: gone\]'"
+alias gbxg="gbg | grep -v '^[*+]' | awk '{print \$1}' | xargs -r git branch -D"
 # git branch delete merged
 alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git fetch (all)
@@ -115,8 +115,10 @@ alias gfa="git fetch --all --prune"
 alias gf="git fetch --prune"
 # git commit in progress
 alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l | xargs) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
+# git branch with zombies
+alias gbz="git --no-pager branch -vv"
 # git branch
-alias gb="git --no-pager branch -vv"
+alias gb="gbz --color=always | grep --color=always -v zombie/"
 
 # git log branch. Only what's happened on my branch and its upstreams
 alias glb='gl "@{u}" $(gwtf)..HEAD'
