@@ -214,3 +214,37 @@ function branch-from-main() {
     update-from-main && \
     git checkout -b $1
 }
+
+alias migrate='RAILS_ENV=development bin/rails db:migrate'
+alias migrate-pending='RAILS_ENV=development bin/rails db:migrate:status 2>/dev/null | grep --color=never "^\s*down\s"'
+alias migrate-past='RAILS_ENV=development bin/rails db:migrate:status 2>/dev/null | grep --color=never "^\s*up\s" | tail -n3'
+alias rollback='RAILS_ENV=development bin/rails db:rollback'
+function rollfwd() {
+    VERSION=$(RAILS_ENV=development bin/rails db:migrate:status | grep '^\s*down\s' | head -n1 | awk '{print $2}')
+    RAILS_ENV=development bin/rails db:migrate:up VERSION=$VERSION
+}
+# Given a migration number (e.g. 2025_09_12_065821 or 20250912065821), replace that number with a current timestamp
+# in:
+#   - the filename of the migration class
+#   - the current version in schema.rb
+#   - the schema_migrations table in the database
+function migrate-rename() {
+    OLD_STAMP=$(echo $1 | tr -d _) # e.g. 20250912065821
+    OLD_STAMP_FMT=$(echo $OLD_STAMP | sed -e 's/\(202[0-9]\)\([0-9][0-9]\)\([0-9][0-9]\)\([0-9]*\)/\1_\2_\3_\4/') # e.g. 2025_09_12_065821
+    NEW_STAMP_FMT=$(date -zUTC '+%Y_%m_%d_%H%M%S')
+    NEW_STAMP=$(echo $NEW_STAMP_FMT | tr -d _)
+    OLD_FILE=(./db/migrate/${OLD_STAMP}_*.rb) # parens force glob to be evaluated
+    if [[ ${#OLD_FILE[@]} -ne 1 ]]; then
+        echo "Error: Expected exactly one file, found ${#OLD_FILE[@]}"
+        return 1
+    fi
+    NEW_FILE=$(echo $OLD_FILE | sed -e "s/$OLD_STAMP/$NEW_STAMP/")
+    echo git mv $OLD_FILE $NEW_FILE
+    git mv $OLD_FILE $NEW_FILE
+    echo sed "s/$OLD_STAMP_FMT/$NEW_STAMP_FMT" -i db/schema.rb
+    sed "s/$OLD_STAMP_FMT/$NEW_STAMP_FMT/" -i db/schema.rb
+    echo command psql -c "UPDATE schema_migrations SET version = '$NEW_STAMP' WHERE version = '$OLD_STAMP'"
+    command psql -c "UPDATE schema_migrations SET version = '$NEW_STAMP' WHERE version = '$OLD_STAMP'"
+}
+
+
