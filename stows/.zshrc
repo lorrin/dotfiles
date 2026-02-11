@@ -229,7 +229,9 @@ function wait-port {
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [[ -z $INTELLIJ_ENVIRONMENT_READER ]]; then
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
 
 function title {
     if { [ "$TERM" = "screen" ] && [ -n "$TMUX" ] }; then 
