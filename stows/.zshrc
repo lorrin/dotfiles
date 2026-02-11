@@ -354,3 +354,5 @@ fi
 if type fastfetch > /dev/null; then
     alias neofetch=fastfetch
 fi
+
+export PATH="$HOME/.local/bin:$PATH"
