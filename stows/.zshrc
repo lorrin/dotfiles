@@ -267,9 +267,10 @@ else
 fi
 
 # pgcli is a postgres client that does auto-completion and syntax highlighting
-if type pgcli > /dev/null; then
-    alias psql=pgcli
-fi
+# ... too annoying to not have psql accept -c argument as expected. Comment out for now.
+# if type pgcli > /dev/null; then
+#     alias psql=pgcli
+# fi
 
 # viddy alternative to watch that does diff highlighting, change tracking
 if type viddy > /dev/null; then
