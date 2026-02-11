@@ -37,6 +37,7 @@ unsetopt SHARE_HISTORY
 export ZSH_HIGHLIGHT_STYLES[root]='bold'
 
 export EDITOR=vim
+export VISUAL=vim
 
 # Allow ctrl-r / ctrl-f to cycle through history matches.
 # Note in vicmd mode ? and / are bound to these, and ctrl-r is bound to redo.
