@@ -9,6 +9,8 @@
     # the remote tracking branch. Instead, only set it up when the names match.
     # When it is left unset, autoSetupRemote will assume same-name.
     autoSetupMerge = simple
+    # Sort by time instead of alphabetically
+    sort = -committerdate
 
 [user]
     name = Lorrin Nelson

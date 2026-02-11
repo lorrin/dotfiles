@@ -1,24 +1,22 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block, everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# IntelliJ uses interactive terminals to get env vars but doesn't actually
+# want interaction; seems to be bumping to problems with Powerlevel10k's gitstatus:
+#   stdout/stderr: (anon):setopt:7: can't change option: monitor
+#   gitstatus failed to initialize.
+# Fix by omitting Powerlevel10k when INTELLIJ_ENVIRONMENT_READER is set.
+# Also omit Zprezto.
+if [[ -z $INTELLIJ_ENVIRONMENT_READER ]]; then
+    # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+    # Initialization code that may require console input (password prompts, [y/n]
+    # confirmations, etc.) must go above this block, everything else may go below.
+    if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+      source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    fi
+
+    # Source Prezto.
+    if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+      source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+    fi
 fi
-
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   Lorrin Nelson <https://github.com/lorrin>
-#
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-# Customize to your needs...
 
 # Turn off SHARE_HISTORY, which jumbles together the history of each
 # open session and works against having task-specific shells in long-
@@ -39,6 +37,7 @@ unsetopt SHARE_HISTORY
 export ZSH_HIGHLIGHT_STYLES[root]='bold'
 
 export EDITOR=vim
+export VISUAL=vim
 
 # Allow ctrl-r / ctrl-f to cycle through history matches.
 # Note in vicmd mode ? and / are bound to these, and ctrl-r is bound to redo.
@@ -95,7 +94,7 @@ function gom(){
 # More git aliases
 # git branch origin main
 function gbom(){
-    git checkout -b $1 $(gom)
+    gfa && git checkout -b $1 $(gom)
 }
 
 # Gall's where-the-fork git_wft_* aliases. Diff against where branch split from main.
@@ -107,8 +106,8 @@ alias gwtff='git diff `gwtf` --name-only' # where-the-fork [changed] files
 # alias git-branch-clean="git branch --merged | grep -vE '^\* ' | xargs -r git branch -d"
 # Dangerous incarnation to work with the horrid GitHub squash merge feature. Assume branches whose upstream is gone are
 # OK to delete. "git branch gone" and "git branch delete gone"
-alias gbg="gb | grep '\[origin/.*: gone\]'"
-alias gbxg="gbg | grep -v '^*' | awk '{print \$1}' | xargs -r git branch -D"
+alias gbg="git branch -vv | grep '\[origin/.*: gone\]'"
+alias gbxg="gbg | grep -v '^[*+]' | awk '{print \$1}' | xargs -r git branch -D"
 # git branch delete merged
 alias gbxm="git branch --merged | grep -vP '^\* ' | xargs -r git branch -d"
 # git fetch (all)
@@ -116,8 +115,16 @@ alias gfa="git fetch --all --prune"
 alias gf="git fetch --prune"
 # git commit in progress
 alias gcip='git commit -a -m "$((git diff --name-only; git diff --staged --name-only) | sort | uniq | wc -l | xargs) files in progress on $(git branch --show-current) at $(date "+%Y-%m-%d %H:%M")" --no-verify'
+# git branch with zombies
+alias gbz="git --no-pager branch -vv"
 # git branch
-alias gb="git --no-pager branch -vv"
+alias gb="gbz --color=always | grep --color=always -v zombie/"
+
+# git log branch. Only what's happened on my branch and its upstreams
+alias glb='gl "@{u}" $(gwtf)..HEAD'
+
+# git rebase interactive branch. Only rebase since I branched.
+alias grib='git rebase -i $(gwtf)..HEAD'
 
 # https://stackoverflow.com/a/21302474
 git-rename-remote-branch() {
@@ -228,7 +235,9 @@ function wait-port {
 [[ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]] && source ${ZDOTDIR:-$HOME}/.zshrc.local
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if [[ -z $INTELLIJ_ENVIRONMENT_READER ]]; then
+    [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi
 
 function title {
     if { [ "$TERM" = "screen" ] && [ -n "$TMUX" ] }; then 
@@ -255,19 +264,24 @@ export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=YES
 # Eza alternative to ls. Note that it is not a drop-in replacement. https://eza.rocks/
 if type eza > /dev/null; then
     alias ls='eza --all --long --classify --header --group --git --icons --color-scale'
+    # Just file names for use with xargs and such
+    alias lsls='eza -1 --icons=never'
+else
+    alias lsls='ls'
 fi
 
 # pgcli is a postgres client that does auto-completion and syntax highlighting
-if type pgcli > /dev/null; then
-    alias psql=pgcli
-fi
+# ... too annoying to not have psql accept -c argument as expected. Comment out for now.
+# if type pgcli > /dev/null; then
+#     alias psql=pgcli
+# fi
 
 # viddy alternative to watch that does diff highlighting, change tracking
 if type viddy > /dev/null; then
     alias watch=viddy
 fi
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+#export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
@@ -344,3 +358,5 @@ fi
 if type fastfetch > /dev/null; then
     alias neofetch=fastfetch
 fi
+
+export PATH="$HOME/.local/bin:$PATH"

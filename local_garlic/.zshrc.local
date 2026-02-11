@@ -1,16 +1,51 @@
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
-alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
-alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
+function aws-login-to() {
+    if ! AWS_PROFILE=$1 aws configure export-credentials &> /dev/null; then
+        echo "Performing SSO login to $1"
+        AWS_PROFILE=$1 aws sso login;
+    fi
+}
+
+function aws-login() {
+    aws-login-to datagrail-dev
+    aws-login-to datagrail-production
+}
+
+function aws-relogin() {
+    AWS_PROFILE=datagrail-dev aws sso logout;
+    AWS_PROFILE=datagrail-production aws sso logout;
+    aws-login
+}
+
+# Spring must be disbled for LOG_SQL_QUERIES. But should it be enabled otherwise?
+alias console="aws-login && title console && DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
+alias console-with-sql="as-login && title console && DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
+overmind-start() {
+    title overmind && \
+    wait-port 5432 && \
+    aws-login && \
+    if [[ -e .overmind.sock ]] && [[ $(stat -f %m .overmind.sock) -lt $(sysctl -n kern.boottime | awk -F'=|,' '{print $2}')
+    ]]; then
+      rm .overmind.sock
+    fi && \
+    overmind start --title overmind
+}
+alias docker-start='title docker && (colima status || colima-start) && docker-compose up db redis nginx'
+alias pgcli-start='title psql && wait-port 5432 && pgcli'
+# Fix for rm-agent split
+#alias agent-start='title agent && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml build && docker-compose -f rm/docker-compose.yml up'
+alias agent-start='echo fix this for split of the rm-agent repo'
+
 
 function dgapp-dev() {
-    cd ~/dg/dgapp
-    ttab 'title console && cd ~/dg/dgapp && console'
-    ttab 'title honcho && cd ~/dg/dgapp && wait-port 5432 && aws-login && honcho start sidekiq rails nginx'
-    ttab 'title frontend && cd ~/dg/dgapp && yarn dev'
-    ttab 'title db && cd ~/dg/dgapp && docker-compose up db redis'
-    ttab 'title psql && cd ~/dg/dgapp && wait-port 5432 && psql'
-    ttab 'title terraform && cd ~/dg/dgapp/terraform/environments/production'
+    d=$(pwd)
+    ttab "cd ${d} && console"
+    ttab "cd ${d} && overmind-start"
+    ttab "cd ${d} && docker-start"
+    ttab "cd ${d} && pgcli-start"
+    #ttab 'title agent-integration && cd ~/dg/dgapp && (colima status || colima-start) && docker rm -v dgapp-integration_test_agent-1; docker-compose up integration_test_agent integration_test_rm_agent_postgres'
+    #ttab agent-start
 }
 
 function resolve-realm() {
@@ -44,7 +79,7 @@ function dg-admin-dev() {
 
 function dg-agent-dev() {
     cd ~/dg/datagrail-agent
-    ttab 'title docker && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml up'
+    ttab 'title docker && cd ~/dg/datagrail-agent && docker-compose -f rm/docker-compose.yml down && docker-compose -f rm/docker-compose.yml build && docker-compose -f rm/docker-compose.yml up'
 }
 
 function release-notes() {
@@ -129,6 +164,7 @@ function release-notes() {
     done
 }
 
+# Delete this? Given a PR number, it renames a lorrin/TICKET_desc branch to /pr/NUMBER/desc
 function branch-pr() {
     if [[ $# -ne 1 ]]; then
         echo "Pull-request ID required"
@@ -148,17 +184,72 @@ function branch-pr() {
     git branch -vv -l $NEW_NAME
 }
 
+alias kill-rubocop='pkill -f rubocop; spring stop; pkill spring; rm -rf ~/.cache/rubocop_cache'
+
+alias colima-start='colima start --memory 3 --arch aarch64 --vm-type=vz --vz-rosetta --mount $HOME/dg:$HOME/dg:w'
+
 function update() {
+    kill-rubocop
+    pkill -9 -f annotaterb
     rbenv install --skip-existing && \
+    brew upgrade ruby-build && \
     bundle install && \
     gem install yard && \
-    gem install foreman && \
-    RAILS_ENV=development bin/rails db:migrate && \
-    RAILS_ENV=development bundle exec rails db:seed:branch_env # superset of db:seed, see db/seeds/README.md
+    yarn install --immutable && \
+    RAILS_ENV=development rake db:migrate && \
+    # RAILS_ENV=development bundle exec rails db:seed && \ # skip now that we auto-seed from the app
+    (openssl x509 -in ~/dg/dgapp/letsencrypt/live/$USER.dg-dev.com/cert.pem -checkend 864000 > /dev/null || (aws-login && scripts/development/generate_dev_certs.sh))
+    # Using grep to catch the text since openssl exit codes are unreliable in 3.6.0
+    (openssl x509 -in ~/dg/dgapp/letsencrypt/live/$USER.dg-dev.com/cert.pem -noout -checkend 864000 | grep -q "will not expire" || (aws-login && scripts/development/generate_dev_certs.sh))
 }
 
 function update-from-main() {
     gfa && \
     git checkout origin/master && \
+    kill-rubocop && \
     update
 }
+
+function branch-from-main() {
+    update-from-main && \
+    git checkout -b $1
+}
+
+alias migrate='RAILS_ENV=development bin/rails db:migrate'
+alias migrate-pending='RAILS_ENV=development bin/rails db:migrate:status 2>/dev/null | grep --color=never "^\s*down\s"'
+alias migrate-past='RAILS_ENV=development bin/rails db:migrate:status 2>/dev/null | grep --color=never "^\s*up\s" | tail -n3'
+alias rollback='RAILS_ENV=development bin/rails db:rollback'
+function rollfwd() {
+    VERSION=$(RAILS_ENV=development bin/rails db:migrate:status | grep '^\s*down\s' | head -n1 | awk '{print $2}')
+    RAILS_ENV=development bin/rails db:migrate:up VERSION=$VERSION
+}
+# Given a migration number (e.g. 2025_09_12_065821 or 20250912065821), replace that number with a current timestamp
+# in:
+#   - the filename of the migration class
+#   - the current version in schema.rb
+#   - the schema_migrations table in the database
+function migrate-rename() {
+    OLD_STAMP=$(echo $1 | tr -d _) # e.g. 20250912065821
+    OLD_STAMP_FMT=$(echo $OLD_STAMP | sed -e 's/\(202[0-9]\)\([0-9][0-9]\)\([0-9][0-9]\)\([0-9]*\)/\1_\2_\3_\4/') # e.g. 2025_09_12_065821
+    NEW_STAMP_FMT=$(date -zUTC '+%Y_%m_%d_%H%M%S')
+    NEW_STAMP=$(echo $NEW_STAMP_FMT | tr -d _)
+    OLD_FILE=(./db/migrate/${OLD_STAMP}_*.rb) # parens force glob to be evaluated
+    if [[ ${#OLD_FILE[@]} -ne 1 ]]; then
+        echo "Error: Expected exactly one file, found ${#OLD_FILE[@]}"
+        return 1
+    fi
+    NEW_FILE=$(echo $OLD_FILE | sed -e "s/$OLD_STAMP/$NEW_STAMP/")
+    echo git mv $OLD_FILE $NEW_FILE
+    git mv $OLD_FILE $NEW_FILE
+    echo sed "s/$OLD_STAMP_FMT/$NEW_STAMP_FMT" -i db/schema.rb
+    sed "s/$OLD_STAMP_FMT/$NEW_STAMP_FMT/" -i db/schema.rb
+    echo command psql -c "UPDATE schema_migrations SET version = '$NEW_STAMP' WHERE version = '$OLD_STAMP'"
+    command psql -c "UPDATE schema_migrations SET version = '$NEW_STAMP' WHERE version = '$OLD_STAMP'"
+}
+
+source ~/dg/dg_shell_utils/init.sh
+
+# DataGrail dgapp worktree integration
+source "/Users/lorrin/dg/dgapp/.worktree-shell-integration"
+
+
