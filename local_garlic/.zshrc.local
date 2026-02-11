@@ -1,8 +1,26 @@
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
-alias aws-login="if ! aws sts get-caller-identity > /dev/null 2>&1; then aws sso login; fi"
-alias console="DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
-alias console-with-sql="DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
+function aws-login-to() {
+    if ! AWS_PROFILE=$1 aws configure export-credentials &> /dev/null; then
+        echo "Performing SSO login to $1"
+        AWS_PROFILE=$1 aws sso login;
+    fi
+}
+
+function aws-login() {
+    aws-login-to datagrail-dev
+    aws-login-to datagrail-production
+}
+
+function aws-relogin() {
+    AWS_PROFILE=datagrail-dev aws sso logout;
+    AWS_PROFILE=datagrail-production aws sso logout;
+    aws-login
+}
+
+# Spring must be disbled for LOG_SQL_QUERIES. But should it be enabled otherwise?
+alias console="aws-login && title console && DISABLE_SPRING=1 LOG_SQL_QUERIES='false' bundle exec rails c"
+alias console-with-sql="as-login && title console && DISABLE_SPRING=1 LOG_SQL_QUERIES='true' bundle exec rails c"
 
 function dgapp-dev() {
     cd ~/dg/dgapp
