@@ -1,9 +1,22 @@
 export SSH_AUTH_SOCK=~/.1password/agent.sock
 
 function aws-login-to() {
+    # AWS env vars live in ~/dg/.envrc, make sure they're active.
+    # Check if we are already inside ~/dg or a subdirectory
+    # The :P modifier resolves the path to its absolute physical form
+    if [[ ! "$PWD" == "$HOME/dg"/* && "$PWD" != "$HOME/dg" ]]; then
+        local pushed_dir=true
+        pushd ~/dg > /dev/null
+    fi
+
     if ! AWS_PROFILE=$1 aws configure export-credentials &> /dev/null; then
         echo "Performing SSO login to $1"
-        AWS_PROFILE=$1 aws sso login;
+        AWS_PROFILE=$1 aws sso login
+    fi
+
+    # Only go back if we actually changed directory
+    if [[ "$pushed_dir" == true ]]; then
+        popd > /dev/null
     fi
 }
 
@@ -13,8 +26,22 @@ function aws-login() {
 }
 
 function aws-relogin() {
+    # AWS env vars live in ~/dg/.envrc, make sure they're active.
+    # Check if we are already inside ~/dg or a subdirectory
+    # The :P modifier resolves the path to its absolute physical form
+    if [[ ! "$PWD" == "$HOME/dg"/* && "$PWD" != "$HOME/dg" ]]; then
+        local pushed_dir=true
+        pushd ~/dg > /dev/null
+    fi
+
     AWS_PROFILE=datagrail-dev aws sso logout;
     AWS_PROFILE=datagrail-production aws sso logout;
+
+    # Only go back if we actually changed directory
+    if [[ "$pushed_dir" == true ]]; then
+        popd > /dev/null
+    fi
+
     aws-login
 }
 
@@ -252,4 +279,4 @@ source ~/dg/dg_shell_utils/init.sh
 # DataGrail dgapp worktree integration
 source "/Users/lorrin/dg/dgapp/.worktree-shell-integration"
 
-
+alias request_access='direnv exec ~/dg/dg_shell_utils ~/dg/dg_shell_utils/bin/request_access'
