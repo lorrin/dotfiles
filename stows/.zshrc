@@ -158,29 +158,6 @@ if which python3 > /dev/null; then
     export PATH=$PATH:"$PYTHON_SYSTEM_SCRIPTS"
     PYTHON_USER_SCRIPTS="$(python3 -c "import os; import sysconfig; print(sysconfig.get_path('scripts', f'{os.name}_user'))")"
     export PATH=$PATH:"$PYTHON_USER_SCRIPTS"
-
-    # Somewhat bogus to assume virtualenvwrapper was installed to Python 3; could have been Python 2
-    # Proper thing to do would be to see which one has the virtualenvwrapper module available.
-    # This is even more bogus if a virtualenv is already active and .zshrc is re-sourced.
-    export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-
-    if python3 -m pip 2>&1 > /dev/null && python3 -m pip --disable-pip-version-check list | grep -E '^virtualenv\s' > /dev/null; then
-        for P in "$PYTHON_SYSTEM_SCRIPTS" "$PYTHON_USER_SCRIPTS"; do
-            if [ -e "${P}/virtualenvwrapper.sh" ]; then
-                export WORKON_HOME=$HOME/.virtualenvs
-                mkdir -p $WORKON_HOME
-                # Work around GNU grep now issuing warnings when egrep is invoked. https://lists.gnu.org/archive/html/info-gnu/2022-09/msg00001.html
-                source <(< "${P}/virtualenvwrapper.sh" sed -e 's/egrep/grep -E/')
-                break
-            fi
-        done
-        if which virtualenvwrapper.sh > /dev/null && ! which mkvirtualenv > /dev/null; then
-            echo not found use $(which virtualenvwrapper.sh)
-            export WORKON_HOME=$HOME/.virtualenvs
-            mkdir -p $WORKON_HOME
-            source <(< "$(which virtualenvwrapper.sh)" sed -e 's/egrep/grep -E/')
-        fi
-    fi
 fi
 if which poetry > /dev/null; then
     POETRY_COMPLETIONS="$HOME/.zprezto/modules/completion/external/src/_poetry"
